@@ -3,9 +3,11 @@ package pl.edu.pw.sortingvisualizer;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class SortingVisualizer extends Application {
     @Override
@@ -13,6 +15,7 @@ public class SortingVisualizer extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(SortingVisualizer.class.getResource("main-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 320, 240);
         stage.setTitle("SortingVisualizer");
+        stage.getIcons().add(new Image(Objects.requireNonNull(SortingVisualizer.class.getResourceAsStream("icon.png"))));
         stage.setScene(scene);
         stage.show();
     }
