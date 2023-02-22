@@ -16,9 +16,11 @@ public class BubbleSort implements VisualizableSorter {
         }
 
         List<SortingEvent> events = new ArrayList<>();
-        boolean hasSwapped = false;
+        boolean hasSwapped;
 
         do {
+            hasSwapped = false;
+
             for (int i = 0; i < nums.length - 1; i++) {
                 events.add(new SortingEvent(SortingEventType.Comparison, i, i + 1));
 
