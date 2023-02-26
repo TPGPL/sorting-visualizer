@@ -1,14 +1,18 @@
 package pl.edu.pw.sortingvisualizer;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
+import javafx.scene.control.ChoiceBox;
+import pl.edu.pw.sortingvisualizer.sorters.SortingAlgorithm;
 
 public class AppController {
+
+    private final static SortingAlgorithm DEFAULT_SORTING_ALGORITHM = SortingAlgorithm.BubbleSort;
     @FXML
-    private Label welcomeText;
+    private ChoiceBox<SortingAlgorithm> sortChoiceBox;
 
     @FXML
-    protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application!");
+    public void initialize() {
+        sortChoiceBox.getItems().addAll(SortingAlgorithm.values());
+        sortChoiceBox.setValue(DEFAULT_SORTING_ALGORITHM);
     }
 }
