@@ -4,7 +4,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Slider;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
 import pl.edu.pw.sortingvisualizer.sorters.SortingAlgorithm;
 
 public class AppController {
@@ -21,11 +22,13 @@ public class AppController {
     @FXML
     private Button sortButton;
     @FXML
-    private VBox drawPanel;
+    private HBox drawPanel;
 
     @FXML
     public void initialize() {
         sortChoiceBox.getItems().addAll(SortingAlgorithm.values());
         sortChoiceBox.setValue(DEFAULT_SORTING_ALGORITHM);
+
+        drawPanel.getChildren().add(new Text("<no array generated>"));
     }
 }
