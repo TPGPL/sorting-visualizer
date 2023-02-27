@@ -78,6 +78,7 @@ public class AppController {
         delaySlider.setDisable(false);
         sizeSlider.setDisable(false);
         generateButton.setDisable(false);
+        sortChoiceBox.setDisable(false);
     }
 
     @FXML
@@ -86,6 +87,6 @@ public class AppController {
         sizeSlider.setDisable(true);
         generateButton.setDisable(true);
         sortButton.setDisable(true);
-
+        sortChoiceBox.setDisable(true);
     }
 }
