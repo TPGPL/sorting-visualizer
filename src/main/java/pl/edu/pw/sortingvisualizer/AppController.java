@@ -1,6 +1,5 @@
 package pl.edu.pw.sortingvisualizer;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -39,7 +38,7 @@ public class AppController {
     }
 
     @FXML
-    public void generateArray(ActionEvent actionEvent) {
+    public void generateArray() {
         int elemCount = (int) sizeSlider.getValue();
 
         sortArray = ArrayGenerator.generateArray(elemCount, drawPanel.getHeight());
