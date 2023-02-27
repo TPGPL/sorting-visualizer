@@ -71,4 +71,21 @@ public class AppController {
             gc.fillRect(i * elemWidth, drawPanel.getHeight() - drawRectangles[i].getHeight(), elemWidth, drawRectangles[i].getHeight());
         }
     }
+
+    @FXML
+    private void enableUI() {
+        // sortButton is not enabled, because a new array must be generated after sorting ends
+        delaySlider.setDisable(false);
+        sizeSlider.setDisable(false);
+        generateButton.setDisable(false);
+    }
+
+    @FXML
+    private void disableUI() {
+        delaySlider.setDisable(true);
+        sizeSlider.setDisable(true);
+        generateButton.setDisable(true);
+        sortButton.setDisable(true);
+
+    }
 }
