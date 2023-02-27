@@ -1,11 +1,12 @@
 package pl.edu.pw.sortingvisualizer;
 
 import javafx.fxml.FXML;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Slider;
-import javafx.scene.layout.HBox;
-import javafx.scene.text.Text;
+import javafx.scene.shape.Rectangle;
 import pl.edu.pw.sortingvisualizer.sorters.SortingAlgorithm;
 
 public class AppController {
@@ -22,13 +23,17 @@ public class AppController {
     @FXML
     private Button sortButton;
     @FXML
-    private HBox drawPanel;
+    private Canvas drawPanel;
+    private double[] sortArray;
+    private Rectangle[] drawRectangles;
+    private GraphicsContext gc;
 
     @FXML
     public void initialize() {
         sortChoiceBox.getItems().addAll(SortingAlgorithm.values());
         sortChoiceBox.setValue(DEFAULT_SORTING_ALGORITHM);
 
-        drawPanel.getChildren().add(new Text("<no array generated>"));
+        gc = drawPanel.getGraphicsContext2D();
+        gc.fillText("<no array generated>", 0, drawPanel.getHeight() - 10);
     }
 }

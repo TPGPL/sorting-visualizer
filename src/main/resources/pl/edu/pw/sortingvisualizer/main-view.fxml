@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.*?>
+<?import javafx.scene.canvas.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -26,5 +27,5 @@
          <Button fx:id="sortButton" disable="true" mnemonicParsing="false" prefWidth="100.0" text="Sort" />
       </VBox>
    </HBox>
-   <HBox fx:id="drawPanel" alignment="BOTTOM_LEFT" prefHeight="500.0" prefWidth="640.0" />
+   <Canvas fx:id="drawPanel" height="500.0" width="640.0" />
 </VBox>
