@@ -58,5 +58,17 @@ public class AppController {
             gc.setFill(drawRectangles[i].getFill());
             gc.fillRect(i * elemWidth, drawPanel.getHeight() - drawRectangles[i].getHeight(), elemWidth, drawRectangles[i].getHeight());
         }
+
+    }
+
+    @FXML
+    private void redrawRectangles(int... indices) {
+        double elemWidth = drawPanel.getWidth() / drawRectangles.length;
+
+        for (int i : indices) {
+            gc.clearRect(i * elemWidth, 0, elemWidth, drawPanel.getHeight());
+            gc.setFill(drawRectangles[i].getFill());
+            gc.fillRect(i * elemWidth, drawPanel.getHeight() - drawRectangles[i].getHeight(), elemWidth, drawRectangles[i].getHeight());
+        }
     }
 }
