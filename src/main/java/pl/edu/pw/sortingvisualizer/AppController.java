@@ -45,12 +45,12 @@ public class AppController {
         sortArray = ArrayGenerator.generateArray(elemCount, drawPanel.getHeight());
         drawRectangles = ArrayGenerator.convertDoubleToRectangleArray(sortArray, drawPanel.getWidth());
 
-        drawRectangles();
+        drawRectangleArray();
         sortButton.setDisable(false);
     }
 
     @FXML
-    private void drawRectangles() {
+    private void drawRectangleArray() {
         gc.clearRect(0, 0, drawPanel.getWidth(), drawPanel.getHeight());
 
         double elemWidth = drawPanel.getWidth() / drawRectangles.length;
