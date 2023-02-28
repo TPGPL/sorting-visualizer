@@ -7,7 +7,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Slider;
 import javafx.scene.shape.Rectangle;
+import pl.edu.pw.sortingvisualizer.sorters.BubbleSort;
+import pl.edu.pw.sortingvisualizer.sorters.HeapSort;
+import pl.edu.pw.sortingvisualizer.sorters.InsertionSort;
+import pl.edu.pw.sortingvisualizer.sorters.QuickSort;
+import pl.edu.pw.sortingvisualizer.sorters.SelectionSort;
 import pl.edu.pw.sortingvisualizer.sorters.SortingAlgorithm;
+import pl.edu.pw.sortingvisualizer.sorters.VisualizableSorter;
 
 public class AppController {
 
@@ -27,6 +33,7 @@ public class AppController {
     private double[] sortArray;
     private Rectangle[] drawRectangles;
     private GraphicsContext gc;
+    private VisualizableSorter sorter;
 
     @FXML
     public void initialize() {
@@ -88,5 +95,17 @@ public class AppController {
         generateButton.setDisable(true);
         sortButton.setDisable(true);
         sortChoiceBox.setDisable(true);
+    }
+
+    @FXML
+    private void selectSortingAlgorithm() {
+        sorter = switch (sortChoiceBox.getValue()) {
+            case BubbleSort -> new BubbleSort();
+            case HeapSort -> new HeapSort();
+            case QuickSort -> new QuickSort();
+            case InsertionSort -> new InsertionSort();
+            case SelectionSort -> new SelectionSort();
+            case MergeSort -> throw new UnsupportedOperationException("MergeSort has not been implemented yet.");
+        };
     }
 }
