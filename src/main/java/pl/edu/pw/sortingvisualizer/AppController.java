@@ -123,17 +123,6 @@ public class AppController {
     }
 
     @FXML
-    private void redrawRectangles(int... indices) {
-        double elemWidth = drawPanel.getWidth() / drawRectangles.length;
-
-        for (int i : indices) {
-            gc.clearRect(i * elemWidth, 0, elemWidth, drawPanel.getHeight());
-            gc.setFill(drawRectangles[i].getFill());
-            gc.fillRect(i * elemWidth, drawPanel.getHeight() - drawRectangles[i].getHeight(), elemWidth, drawRectangles[i].getHeight());
-        }
-    }
-
-    @FXML
     private void enableUI() {
         delaySlider.setDisable(false);
         sizeSlider.setDisable(false);
@@ -187,7 +176,7 @@ public class AppController {
             recolorRectangles(Color.TURQUOISE, firstIndex, secondIndex);
             Thread.sleep((long) delaySlider.getValue());
             swapRectangles(firstIndex, secondIndex);
-            Platform.runLater(() -> redrawRectangles(firstIndex, secondIndex));
+            Platform.runLater(this::drawRectangleArray);
             Thread.sleep((long) delaySlider.getValue());
             recolorRectangles(Color.BLACK, firstIndex, secondIndex);
         } catch (InterruptedException ignored) {
@@ -199,6 +188,6 @@ public class AppController {
             drawRectangles[i].setFill(color);
         }
 
-        Platform.runLater(() -> redrawRectangles(indices));
+        Platform.runLater(this::drawRectangleArray);
     }
 }
