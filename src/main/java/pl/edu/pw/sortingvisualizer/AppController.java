@@ -39,6 +39,7 @@ public class AppController {
     private Rectangle[] drawRectangles;
     private GraphicsContext gc;
     private VisualizableSorter sorter;
+    private KillableThread runner;
 
     @FXML
     public void initialize() {
@@ -62,28 +63,42 @@ public class AppController {
 
     @FXML
     public void sortAction() {
+        // takes action of a Stop button when the thread is active
+        if (runner != null && runner.isAlive()) {
+            runner.kill();
+            enableUI();
+
+            return;
+        }
+
         disableUI();
         selectSortingAlgorithm();
 
         List<SortingEvent> events = sorter.sort(sortArray);
 
-        Thread runner = new Thread(() -> {
-            for (SortingEvent event : events) {
-                switch (event.getType()) {
-                    case Comparison ->
-                            performComparisonAnimation(event.getFirstElementIndex(), event.getSecondElementIndex());
-                    case Swap -> performSwapAnimation(event.getFirstElementIndex(), event.getSecondElementIndex());
+        runner = new KillableThread() {
+            @Override
+            public void run() {
+                for (SortingEvent event : events) {
+                    if (isKilled) {
+                        return;
+                    }
+
+                    switch (event.getType()) {
+                        case Comparison ->
+                                performComparisonAnimation(event.getFirstElementIndex(), event.getSecondElementIndex());
+                        case Swap -> performSwapAnimation(event.getFirstElementIndex(), event.getSecondElementIndex());
+                    }
+
+                    try {
+                        Thread.sleep((long) delaySlider.getValue());
+                    } catch (InterruptedException ignored) {
+                    }
                 }
 
-                try {
-                    Thread.sleep((long) delaySlider.getValue());
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
+                Platform.runLater(() -> enableUI());
             }
-
-            Platform.runLater(this::enableUI);
-        });
+        };
 
         runner.start();
     }
@@ -114,20 +129,22 @@ public class AppController {
 
     @FXML
     private void enableUI() {
-        // sortButton is not enabled, because a new array must be generated after sorting ends
         delaySlider.setDisable(false);
         sizeSlider.setDisable(false);
         generateButton.setDisable(false);
         sortChoiceBox.setDisable(false);
+
+        sortButton.setText("Sort");
+        sortButton.setDisable(true);
     }
 
     @FXML
     private void disableUI() {
-        //delaySlider.setDisable(true);
         sizeSlider.setDisable(true);
         generateButton.setDisable(true);
-        sortButton.setDisable(true);
         sortChoiceBox.setDisable(true);
+
+        sortButton.setText("Stop");
     }
 
     @FXML
