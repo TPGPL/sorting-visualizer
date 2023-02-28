@@ -1,11 +1,13 @@
 package pl.edu.pw.sortingvisualizer;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Slider;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import pl.edu.pw.sortingvisualizer.sorters.BubbleSort;
 import pl.edu.pw.sortingvisualizer.sorters.HeapSort;
@@ -14,6 +16,9 @@ import pl.edu.pw.sortingvisualizer.sorters.QuickSort;
 import pl.edu.pw.sortingvisualizer.sorters.SelectionSort;
 import pl.edu.pw.sortingvisualizer.sorters.SortingAlgorithm;
 import pl.edu.pw.sortingvisualizer.sorters.VisualizableSorter;
+import pl.edu.pw.sortingvisualizer.sortingevent.SortingEvent;
+
+import java.util.List;
 
 public class AppController {
 
@@ -56,6 +61,34 @@ public class AppController {
     }
 
     @FXML
+    public void sortAction() {
+        disableUI();
+        selectSortingAlgorithm();
+
+        List<SortingEvent> events = sorter.sort(sortArray);
+
+        Thread runner = new Thread(() -> {
+            for (SortingEvent event : events) {
+                switch (event.getType()) {
+                    case Comparison ->
+                            performComparisonAnimation(event.getFirstElementIndex(), event.getSecondElementIndex());
+                    case Swap -> performSwapAnimation(event.getFirstElementIndex(), event.getSecondElementIndex());
+                }
+
+                try {
+                    Thread.sleep((long) delaySlider.getValue());
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            Platform.runLater(this::enableUI);
+        });
+
+        runner.start();
+    }
+
+    @FXML
     private void drawRectangleArray() {
         gc.clearRect(0, 0, drawPanel.getWidth(), drawPanel.getHeight());
 
@@ -90,7 +123,7 @@ public class AppController {
 
     @FXML
     private void disableUI() {
-        delaySlider.setDisable(true);
+        //delaySlider.setDisable(true);
         sizeSlider.setDisable(true);
         generateButton.setDisable(true);
         sortButton.setDisable(true);
@@ -107,5 +140,42 @@ public class AppController {
             case SelectionSort -> new SelectionSort();
             case MergeSort -> throw new UnsupportedOperationException("MergeSort has not been implemented yet.");
         };
+    }
+
+    private void swapRectangles(int firstIndex, int secondIndex) {
+        if (firstIndex != secondIndex) {
+            Rectangle tmp = drawRectangles[firstIndex];
+            drawRectangles[firstIndex] = drawRectangles[secondIndex];
+            drawRectangles[secondIndex] = tmp;
+        }
+    }
+
+    private void performComparisonAnimation(int firstIndex, int secondIndex) {
+        try {
+            recolorRectangles(Color.RED, firstIndex, secondIndex);
+            Thread.sleep((long) delaySlider.getValue());
+            recolorRectangles(Color.BLACK, firstIndex, secondIndex);
+        } catch (InterruptedException ignored) {
+        }
+    }
+
+    private void performSwapAnimation(int firstIndex, int secondIndex) {
+        try {
+            recolorRectangles(Color.TURQUOISE, firstIndex, secondIndex);
+            Thread.sleep((long) delaySlider.getValue());
+            swapRectangles(firstIndex, secondIndex);
+            Platform.runLater(() -> redrawRectangles(firstIndex, secondIndex));
+            Thread.sleep((long) delaySlider.getValue());
+            recolorRectangles(Color.BLACK, firstIndex, secondIndex);
+        } catch (InterruptedException ignored) {
+        }
+    }
+
+    private void recolorRectangles(Color color, int... indices) {
+        for (int i : indices) {
+            drawRectangles[i].setFill(color);
+        }
+
+        Platform.runLater(() -> redrawRectangles(indices));
     }
 }
