@@ -79,21 +79,27 @@ public class AppController {
         runner = new KillableThread() {
             @Override
             public void run() {
-                for (SortingEvent event : events) {
-                    if (isKilled) {
-                        return;
-                    }
+                try {
+                    for (SortingEvent event : events) {
+                        if (isKilled) {
+                            return;
+                        }
 
-                    switch (event.getType()) {
-                        case Comparison ->
-                                performComparisonAnimation(event.getFirstElementIndex(), event.getSecondElementIndex());
-                        case Swap -> performSwapAnimation(event.getFirstElementIndex(), event.getSecondElementIndex());
-                    }
+                        switch (event.getType()) {
+                            case Comparison ->
+                                    performComparisonAnimation(event.getFirstElementIndex(), event.getSecondElementIndex());
+                            case Swap ->
+                                    performSwapAnimation(event.getFirstElementIndex(), event.getSecondElementIndex());
+                        }
 
-                    try {
                         Thread.sleep((long) delaySlider.getValue());
-                    } catch (InterruptedException ignored) {
                     }
+
+                    for (int i = 0; i < drawRectangles.length; i++) {
+                        recolorRectangles(Color.DARKGREEN, i);
+                        Thread.sleep((long) delaySlider.getValue());
+                    }
+                } catch (InterruptedException ignored) {
                 }
 
                 Platform.runLater(() -> enableUI());
