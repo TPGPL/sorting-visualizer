@@ -85,13 +85,7 @@ public class AppController {
                             return;
                         }
 
-                        switch (event.getType()) {
-                            case Comparison ->
-                                    performComparisonAnimation(event.getFirstElementIndex(), event.getSecondElementIndex());
-                            case Swap ->
-                                    performSwapAnimation(event.getFirstElementIndex(), event.getSecondElementIndex());
-                        }
-
+                        performAnimation(event);
                         Thread.sleep((long) delaySlider.getValue());
                     }
 
@@ -159,6 +153,14 @@ public class AppController {
             Rectangle tmp = drawRectangles[firstIndex];
             drawRectangles[firstIndex] = drawRectangles[secondIndex];
             drawRectangles[secondIndex] = tmp;
+        }
+    }
+
+    private void performAnimation(SortingEvent event) {
+        switch (event.getType()) {
+            case Swap -> performSwapAnimation(event.getFirstElementIndex(), event.getSecondElementIndex());
+            case Comparison -> performComparisonAnimation(event.getFirstElementIndex(), event.getSecondElementIndex());
+            case Overwrite -> performOverwriteAnimation(event.getFirstElementIndex(), event.getValue());
         }
     }
 
