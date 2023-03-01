@@ -12,6 +12,7 @@ import javafx.scene.shape.Rectangle;
 import pl.edu.pw.sortingvisualizer.sorters.BubbleSort;
 import pl.edu.pw.sortingvisualizer.sorters.HeapSort;
 import pl.edu.pw.sortingvisualizer.sorters.InsertionSort;
+import pl.edu.pw.sortingvisualizer.sorters.MergeSort;
 import pl.edu.pw.sortingvisualizer.sorters.QuickSort;
 import pl.edu.pw.sortingvisualizer.sorters.SelectionSort;
 import pl.edu.pw.sortingvisualizer.sorters.SortingAlgorithm;
@@ -144,7 +145,7 @@ public class AppController {
             case QuickSort -> new QuickSort();
             case InsertionSort -> new InsertionSort();
             case SelectionSort -> new SelectionSort();
-            case MergeSort -> throw new UnsupportedOperationException("MergeSort has not been implemented yet.");
+            case MergeSort -> new MergeSort();
         };
     }
 
@@ -181,6 +182,18 @@ public class AppController {
             Platform.runLater(this::drawRectangleArray);
             Thread.sleep((long) delaySlider.getValue());
             recolorRectangles(Color.BLACK, firstIndex, secondIndex);
+        } catch (InterruptedException ignored) {
+        }
+    }
+
+    private void performOverwriteAnimation(int index, double newValue) {
+        try {
+            recolorRectangles(Color.GOLD, index);
+            Thread.sleep((long) delaySlider.getValue());
+            drawRectangles[index].setHeight(newValue);
+            Platform.runLater(this::drawRectangleArray);
+            Thread.sleep((long) delaySlider.getValue());
+            recolorRectangles(Color.BLACK, index);
         } catch (InterruptedException ignored) {
         }
     }
