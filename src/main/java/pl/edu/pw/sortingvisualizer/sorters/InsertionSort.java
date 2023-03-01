@@ -28,6 +28,7 @@ public class InsertionSort implements VisualizableSorter {
 
                 events.add(new SortingEvent(SortingEventType.Swap, j, j + 1));
                 swap(nums, j, j + 1);
+
                 j--;
             }
         }

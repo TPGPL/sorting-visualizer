@@ -27,6 +27,7 @@ public class BubbleSort implements VisualizableSorter {
                 if (nums[i] > nums[i + 1]) {
                     events.add(new SortingEvent(SortingEventType.Swap, i, i + 1));
                     swap(nums, i, i + 1);
+
                     hasSwapped = true;
                 }
             }

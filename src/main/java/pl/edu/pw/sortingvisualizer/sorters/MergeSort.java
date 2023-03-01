@@ -24,12 +24,11 @@ public class MergeSort implements VisualizableSorter {
         double[] tmp = new double[nums.length];
         double[] src = nums;
         double[] dst = tmp;
+        int length = nums.length;
 
-        int n = nums.length;
-
-        for (int l = 1; l < n; l *= 2) {
-            for (int i = 0; i < n; i += 2 * l) {
-                merge(src, i, (Math.min(i + l, n)), (Math.min(i + 2 * l, n)), dst);
+        for (int l = 1; l < length; l *= 2) {
+            for (int i = 0; i < length; i += 2 * l) {
+                merge(src, i, (Math.min(i + l, length)), (Math.min(i + 2 * l, length)), dst);
             }
 
             tmp = src;
@@ -38,7 +37,7 @@ public class MergeSort implements VisualizableSorter {
         }
 
         if (src != nums) {
-            System.arraycopy(src, 0, nums, 0, n);
+            System.arraycopy(src, 0, nums, 0, length);
         }
 
         return events;

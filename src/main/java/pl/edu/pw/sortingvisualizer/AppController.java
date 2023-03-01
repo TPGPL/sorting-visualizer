@@ -48,13 +48,13 @@ public class AppController {
         sortChoiceBox.setValue(DEFAULT_SORTING_ALGORITHM);
 
         gc = drawPanel.getGraphicsContext2D();
+
         gc.fillText("<no array generated>", 0, drawPanel.getHeight() - 10);
     }
 
     @FXML
     public void generateArray() {
         int elemCount = (int) sizeSlider.getValue();
-
         sortArray = ArrayGenerator.generateArray(elemCount, drawPanel.getHeight());
         drawRectangles = ArrayGenerator.convertDoubleToRectangleArray(sortArray, drawPanel.getWidth());
 
@@ -122,7 +122,6 @@ public class AppController {
         sizeSlider.setDisable(false);
         generateButton.setDisable(false);
         sortChoiceBox.setDisable(false);
-
         sortButton.setText("Sort");
         sortButton.setDisable(true);
     }
@@ -132,7 +131,6 @@ public class AppController {
         sizeSlider.setDisable(true);
         generateButton.setDisable(true);
         sortChoiceBox.setDisable(true);
-
         sortButton.setText("Stop");
     }
 

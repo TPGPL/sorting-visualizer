@@ -10,7 +10,6 @@ public class SortingEvent {
         this.type = type;
         this.firstElementIndex = firstIndex;
         this.secondElementIndex = secondIndex;
-
         this.value = 0;
     }
 
@@ -18,8 +17,7 @@ public class SortingEvent {
         this.type = type;
         this.firstElementIndex = firstIndex;
         this.value = value;
-
-        secondElementIndex = -1;
+        this.secondElementIndex = -1;
     }
 
     public SortingEventType getType() {
