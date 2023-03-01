@@ -10,6 +10,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import pl.edu.pw.sortingvisualizer.sorters.BubbleSort;
+import pl.edu.pw.sortingvisualizer.sorters.CocktailShakerSort;
 import pl.edu.pw.sortingvisualizer.sorters.HeapSort;
 import pl.edu.pw.sortingvisualizer.sorters.InsertionSort;
 import pl.edu.pw.sortingvisualizer.sorters.MergeSort;
@@ -143,6 +144,7 @@ public class AppController {
             case InsertionSort -> new InsertionSort();
             case SelectionSort -> new SelectionSort();
             case MergeSort -> new MergeSort();
+            case CocktailShakerSort -> new CocktailShakerSort();
         };
     }
 

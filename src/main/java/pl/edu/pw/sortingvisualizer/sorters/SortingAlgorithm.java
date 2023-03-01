@@ -6,5 +6,6 @@ public enum SortingAlgorithm {
     QuickSort,
     InsertionSort,
     SelectionSort,
-    BubbleSort
+    BubbleSort,
+    CocktailShakerSort
 }
