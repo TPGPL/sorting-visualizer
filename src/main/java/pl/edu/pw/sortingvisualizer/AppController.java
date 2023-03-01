@@ -114,7 +114,6 @@ public class AppController {
             gc.setFill(drawRectangles[i].getFill());
             gc.fillRect(i * elemWidth, drawPanel.getHeight() - drawRectangles[i].getHeight(), elemWidth, drawRectangles[i].getHeight());
         }
-
     }
 
     @FXML
