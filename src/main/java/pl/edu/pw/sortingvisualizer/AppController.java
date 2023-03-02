@@ -91,10 +91,7 @@ public class AppController {
                         Thread.sleep((long) delaySlider.getValue());
                     }
 
-                    for (int i = 0; i < drawRectangles.length; i++) {
-                        recolorRectangles(Color.DARKGREEN, i);
-                        Thread.sleep((long) delaySlider.getValue());
-                    }
+                    performCheckAnimation();
                 } catch (InterruptedException ignored) {
                 }
 
@@ -193,6 +190,25 @@ public class AppController {
             Platform.runLater(this::drawRectangleArray);
             Thread.sleep((long) delaySlider.getValue());
             recolorRectangles(Color.BLACK, index);
+        } catch (InterruptedException ignored) {
+        }
+    }
+
+    private void performCheckAnimation() {
+        try {
+            for (int i = 0; i < drawRectangles.length - 1; i++) {
+                performComparisonAnimation(i, i + 1);
+                Thread.sleep((long) delaySlider.getValue());
+
+                if (drawRectangles[i].getHeight() <= drawRectangles[i + 1].getHeight()) {
+                    recolorRectangles(Color.GREEN, i, i + 1);
+                } else {
+                    recolorRectangles(Color.CRIMSON, i, i + 1);
+                }
+
+                Thread.sleep((long) delaySlider.getValue());
+            }
+
         } catch (InterruptedException ignored) {
         }
     }
