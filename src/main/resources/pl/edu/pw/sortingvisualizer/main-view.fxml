@@ -15,11 +15,11 @@
          <ChoiceBox fx:id="sortChoiceBox" prefWidth="150.0" />
       </VBox>
       <VBox prefHeight="200.0" prefWidth="150.0" spacing="10.0">
-         <Label text="Delay [ms]" />
+         <Label text="Delay [ms]" fx:id="delayLabel" />
          <Slider fx:id="delaySlider" blockIncrement="0.25" majorTickUnit="100.0" min="0.25" minorTickCount="1" showTickLabels="true" value="10.0" />
       </VBox>
       <VBox prefHeight="200.0" prefWidth="150.0" spacing="10.0">
-         <Label text="Array size" />
+         <Label text="Array size" fx:id="sizeLabel" />
          <Slider fx:id="sizeSlider" blockIncrement="1.0" majorTickUnit="1000.0" max="1000.0" min="10.0" minorTickCount="5" showTickLabels="true" value="100.0" />
       </VBox>
       <VBox prefHeight="200.0" prefWidth="150.0" spacing="10.0">

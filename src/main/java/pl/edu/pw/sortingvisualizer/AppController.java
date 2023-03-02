@@ -6,6 +6,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -20,6 +21,7 @@ import pl.edu.pw.sortingvisualizer.sorters.SortingAlgorithm;
 import pl.edu.pw.sortingvisualizer.sorters.VisualizableSorter;
 import pl.edu.pw.sortingvisualizer.sortingevent.SortingEvent;
 
+import java.text.DecimalFormat;
 import java.time.Duration;
 import java.util.List;
 
@@ -28,6 +30,10 @@ public class AppController {
     private final static SortingAlgorithm DEFAULT_SORTING_ALGORITHM = SortingAlgorithm.BubbleSort;
     @FXML
     private ChoiceBox<SortingAlgorithm> sortChoiceBox;
+    @FXML
+    private Label delayLabel;
+    @FXML
+    private Label sizeLabel;
     @FXML
     private Slider delaySlider;
     @FXML
@@ -43,15 +49,22 @@ public class AppController {
     private GraphicsContext gc;
     private VisualizableSorter sorter;
     private KillableThread runner;
+    private DecimalFormat formatter;
 
     @FXML
     public void initialize() {
+        formatter = new DecimalFormat("0.##");
+
         sortChoiceBox.getItems().addAll(SortingAlgorithm.values());
         sortChoiceBox.setValue(DEFAULT_SORTING_ALGORITHM);
 
         gc = drawPanel.getGraphicsContext2D();
 
         gc.fillText("<no array generated>", 0, drawPanel.getHeight() - 10);
+        updateDelayLabel();
+        updateSizeLabel();
+        delaySlider.valueProperty().addListener((observableValue, oldValue, newValue) -> updateDelayLabel());
+        sizeSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> updateSizeLabel());
     }
 
     @FXML
@@ -131,6 +144,16 @@ public class AppController {
         generateButton.setDisable(true);
         sortChoiceBox.setDisable(true);
         sortButton.setText("Stop");
+    }
+
+    @FXML
+    private void updateDelayLabel() {
+        delayLabel.setText(String.format("Delay [ms] (%s)", formatter.format(delaySlider.getValue())));
+    }
+
+    @FXML
+    private void updateSizeLabel() {
+        sizeLabel.setText(String.format("Array size (%d)", (int) sizeSlider.getValue()));
     }
 
     @FXML
