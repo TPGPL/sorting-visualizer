@@ -16,7 +16,7 @@
       </VBox>
       <VBox prefHeight="200.0" prefWidth="150.0" spacing="10.0">
          <Label text="Delay [ms]" />
-         <Slider fx:id="delaySlider" blockIncrement="1.0" majorTickUnit="100.0" min="1.0" minorTickCount="1" showTickLabels="true" value="10.0" />
+         <Slider fx:id="delaySlider" blockIncrement="0.25" majorTickUnit="100.0" min="0.25" minorTickCount="1" showTickLabels="true" value="10.0" />
       </VBox>
       <VBox prefHeight="200.0" prefWidth="150.0" spacing="10.0">
          <Label text="Array size" />
