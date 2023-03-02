@@ -20,6 +20,7 @@ import pl.edu.pw.sortingvisualizer.sorters.SortingAlgorithm;
 import pl.edu.pw.sortingvisualizer.sorters.VisualizableSorter;
 import pl.edu.pw.sortingvisualizer.sortingevent.SortingEvent;
 
+import java.time.Duration;
 import java.util.List;
 
 public class AppController {
@@ -88,7 +89,7 @@ public class AppController {
                         }
 
                         performAnimation(event);
-                        Thread.sleep((long) delaySlider.getValue());
+                        Thread.sleep(getSleepDuration());
                     }
 
                     performCheckAnimation();
@@ -164,7 +165,7 @@ public class AppController {
     private void performComparisonAnimation(int firstIndex, int secondIndex) {
         try {
             recolorRectangles(Color.RED, firstIndex, secondIndex);
-            Thread.sleep((long) delaySlider.getValue());
+            Thread.sleep(getSleepDuration());
             recolorRectangles(Color.BLACK, firstIndex, secondIndex);
         } catch (InterruptedException ignored) {
         }
@@ -173,10 +174,10 @@ public class AppController {
     private void performSwapAnimation(int firstIndex, int secondIndex) {
         try {
             recolorRectangles(Color.TURQUOISE, firstIndex, secondIndex);
-            Thread.sleep((long) delaySlider.getValue());
+            Thread.sleep(getSleepDuration());
             swapRectangles(firstIndex, secondIndex);
             Platform.runLater(this::drawRectangleArray);
-            Thread.sleep((long) delaySlider.getValue());
+            Thread.sleep(getSleepDuration());
             recolorRectangles(Color.BLACK, firstIndex, secondIndex);
         } catch (InterruptedException ignored) {
         }
@@ -185,10 +186,10 @@ public class AppController {
     private void performOverwriteAnimation(int index, double newValue) {
         try {
             recolorRectangles(Color.GOLD, index);
-            Thread.sleep((long) delaySlider.getValue());
+            Thread.sleep(getSleepDuration());
             drawRectangles[index].setHeight(newValue);
             Platform.runLater(this::drawRectangleArray);
-            Thread.sleep((long) delaySlider.getValue());
+            Thread.sleep(getSleepDuration());
             recolorRectangles(Color.BLACK, index);
         } catch (InterruptedException ignored) {
         }
@@ -198,7 +199,7 @@ public class AppController {
         try {
             for (int i = 0; i < drawRectangles.length - 1; i++) {
                 performComparisonAnimation(i, i + 1);
-                Thread.sleep((long) delaySlider.getValue());
+                Thread.sleep(getSleepDuration());
 
                 if (drawRectangles[i].getHeight() <= drawRectangles[i + 1].getHeight()) {
                     recolorRectangles(Color.GREEN, i, i + 1);
@@ -206,7 +207,7 @@ public class AppController {
                     recolorRectangles(Color.CRIMSON, i, i + 1);
                 }
 
-                Thread.sleep((long) delaySlider.getValue());
+                Thread.sleep(getSleepDuration());
             }
 
         } catch (InterruptedException ignored) {
@@ -219,5 +220,9 @@ public class AppController {
         }
 
         Platform.runLater(this::drawRectangleArray);
+    }
+
+    private Duration getSleepDuration() {
+        return Duration.ofNanos((long) (delaySlider.getValue() * 1000000));
     }
 }
