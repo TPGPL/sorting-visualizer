@@ -228,6 +228,8 @@ public class AppController {
                     recolorRectangles(Color.GREEN, i, i + 1);
                 } else {
                     recolorRectangles(Color.CRIMSON, i, i + 1);
+
+                    return;
                 }
 
                 Thread.sleep(getSleepDuration());
