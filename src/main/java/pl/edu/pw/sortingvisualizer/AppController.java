@@ -10,15 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import pl.edu.pw.sortingvisualizer.sorters.BubbleSort;
-import pl.edu.pw.sortingvisualizer.sorters.CocktailShakerSort;
-import pl.edu.pw.sortingvisualizer.sorters.HeapSort;
-import pl.edu.pw.sortingvisualizer.sorters.InsertionSort;
-import pl.edu.pw.sortingvisualizer.sorters.MergeSort;
-import pl.edu.pw.sortingvisualizer.sorters.QuickSort;
-import pl.edu.pw.sortingvisualizer.sorters.SelectionSort;
-import pl.edu.pw.sortingvisualizer.sorters.SortingAlgorithm;
-import pl.edu.pw.sortingvisualizer.sorters.VisualizableSorter;
+import pl.edu.pw.sortingvisualizer.sorters.*;
 import pl.edu.pw.sortingvisualizer.sortingevent.SortingEvent;
 
 import java.text.DecimalFormat;
@@ -166,6 +158,7 @@ public class AppController {
             case SelectionSort -> new SelectionSort();
             case MergeSort -> new MergeSort();
             case CocktailShakerSort -> new CocktailShakerSort();
+            case ShellSort -> new ShellSort();
         };
     }
 
