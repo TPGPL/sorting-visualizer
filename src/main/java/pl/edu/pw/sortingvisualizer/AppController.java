@@ -159,6 +159,7 @@ public class AppController {
             case MergeSort -> new MergeSort();
             case CocktailShakerSort -> new CocktailShakerSort();
             case ShellSort -> new ShellSort();
+            case OddEvenSort -> new OddEvenSort();
         };
     }
 

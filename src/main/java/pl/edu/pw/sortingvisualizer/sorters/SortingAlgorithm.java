@@ -8,5 +8,6 @@ public enum SortingAlgorithm {
     SelectionSort,
     BubbleSort,
     CocktailShakerSort,
-    ShellSort
+    ShellSort,
+    OddEvenSort
 }
