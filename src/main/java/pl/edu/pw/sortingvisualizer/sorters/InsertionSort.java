@@ -18,9 +18,7 @@ public class InsertionSort implements VisualizableSorter {
         List<SortingEvent> events = new ArrayList<>();
 
         for (int i = 1; i < nums.length; i++) {
-            int j = i - 1;
-
-            while (j >= 0) {
+            for (int j = i - 1; j >= 0; j--) {
                 events.add(new SortingEvent(SortingEventType.Comparison, j, j + 1));
 
                 if (nums[j] <= nums[j + 1])
@@ -28,8 +26,6 @@ public class InsertionSort implements VisualizableSorter {
 
                 events.add(new SortingEvent(SortingEventType.Swap, j, j + 1));
                 swap(nums, j, j + 1);
-
-                j--;
             }
         }
 

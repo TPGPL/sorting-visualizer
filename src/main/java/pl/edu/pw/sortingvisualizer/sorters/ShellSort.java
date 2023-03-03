@@ -26,9 +26,7 @@ public class ShellSort implements VisualizableSorter {
 
         for (; gap >= 1; gap /= 3) {
             for (int i = gap; i < nums.length; i++) {
-                int j = i - gap;
-
-                while (j >= 0) {
+                for (int j = i - gap; j >= 0; j -= gap) {
                     events.add(new SortingEvent(SortingEventType.Comparison, j, j + gap));
 
                     if (nums[j] <= nums[j + gap])
@@ -36,8 +34,6 @@ public class ShellSort implements VisualizableSorter {
 
                     events.add(new SortingEvent(SortingEventType.Swap, j, j + gap));
                     swap(nums, j, j + gap);
-
-                    j -= gap;
                 }
             }
         }
