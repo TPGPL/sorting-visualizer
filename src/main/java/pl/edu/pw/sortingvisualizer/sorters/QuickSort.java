@@ -30,10 +30,10 @@ public class QuickSort implements VisualizableSorter {
 
     private void recqsort(double[] nums, int start, int end) {
         if (start < end) {
-            int m = divide(nums, start, end);
+            int mid = divide(nums, start, end);
 
-            recqsort(nums, start, m - 1);
-            recqsort(nums, m + 1, end);
+            recqsort(nums, start, mid - 1);
+            recqsort(nums, mid + 1, end);
         }
     }
 

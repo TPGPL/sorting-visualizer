@@ -6,31 +6,31 @@ import javafx.scene.shape.Rectangle;
 import java.util.Random;
 
 public class ArrayGenerator {
-    public static double[] generateArray(int count, double upperBound) {
-        if (count <= 0 || upperBound <= 0) {
-            throw new IllegalArgumentException("The params (count, upperBound) must be positive");
+    public static double[] generateArray(int length, double upperBound) {
+        if (length <= 0 || upperBound <= 0) {
+            throw new IllegalArgumentException("The params (length, upperBound) must be positive.");
         }
 
-        double[] arr = new double[count];
+        double[] nums = new double[length];
         Random rand = new Random();
 
-        for (int i = 0; i < count; i++) {
-            arr[i] = rand.nextDouble() * upperBound;
+        for (int i = 0; i < length; i++) {
+            nums[i] = rand.nextDouble() * upperBound;
         }
 
-        return arr;
+        return nums;
     }
 
-    public static Rectangle[] convertDoubleToRectangleArray(double[] arr, double maxWidth) {
-        if (arr == null) {
+    public static Rectangle[] convertDoubleToRectangleArray(double[] nums, double areaWidth) {
+        if (nums == null) {
             throw new IllegalArgumentException("The array must not be null.");
         }
 
-        Rectangle[] rectArray = new Rectangle[arr.length];
-        double width = arr.length != 0 ? maxWidth / arr.length : 0;
+        Rectangle[] rectArray = new Rectangle[nums.length];
+        double width = nums.length != 0 ? areaWidth / nums.length : 0;
 
-        for (int i = 0; i < arr.length; i++) {
-            rectArray[i] = new Rectangle(width, arr[i], Color.BLACK);
+        for (int i = 0; i < nums.length; i++) {
+            rectArray[i] = new Rectangle(width, nums[i], Color.BLACK);
         }
 
         return rectArray;

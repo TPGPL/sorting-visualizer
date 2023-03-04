@@ -21,10 +21,10 @@ public class MergeSort implements VisualizableSorter {
 
         events.clear();
 
-        double[] tmp = new double[nums.length];
+        int length = nums.length;
+        double[] tmp = new double[length];
         double[] src = nums;
         double[] dst = tmp;
-        int length = nums.length;
 
         for (int l = 1; l < length; l *= 2) {
             for (int i = 0; i < length; i += 2 * l) {

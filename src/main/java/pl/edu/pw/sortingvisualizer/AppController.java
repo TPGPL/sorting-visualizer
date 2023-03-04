@@ -46,17 +46,15 @@ public class AppController {
     @FXML
     public void initialize() {
         formatter = new DecimalFormat("0.##");
-
-        sortChoiceBox.getItems().addAll(SortingAlgorithm.values());
-        sortChoiceBox.setValue(DEFAULT_SORTING_ALGORITHM);
-
         gc = drawPanel.getGraphicsContext2D();
 
-        gc.fillText("<no array generated>", 0, drawPanel.getHeight() - 10);
         updateDelayLabel();
         updateSizeLabel();
         delaySlider.valueProperty().addListener((observableValue, oldValue, newValue) -> updateDelayLabel());
         sizeSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> updateSizeLabel());
+        sortChoiceBox.getItems().addAll(SortingAlgorithm.values());
+        sortChoiceBox.setValue(DEFAULT_SORTING_ALGORITHM);
+        gc.fillText("<no array generated>", 0, drawPanel.getHeight() - 10);
     }
 
     @FXML

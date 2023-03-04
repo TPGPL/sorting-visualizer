@@ -38,41 +38,41 @@ public class HeapSort implements VisualizableSorter {
 
     private void heap_up(double[] nums, int start) {
         while (start > 0) {
-            events.add(new SortingEvent(SortingEventType.Comparison, start, (start - 1) / 2));
+            int parent = (start - 1) / 2;
 
-            if (nums[start] <= nums[(start - 1) / 2]) {
+            events.add(new SortingEvent(SortingEventType.Comparison, start, parent));
+
+            if (nums[start] <= nums[parent]) {
                 return;
             }
 
-            events.add(new SortingEvent(SortingEventType.Swap, start, (start - 1) / 2));
-            swap(nums, start, (start - 1) / 2);
+            events.add(new SortingEvent(SortingEventType.Swap, start, parent));
+            swap(nums, start, parent);
 
-            start = (start - 1) / 2;
+            start = parent;
         }
     }
 
     private void heap_down(double[] nums, int limit) {
-        int ch = 1;
+        for (int child = 1; child < limit; child = 2 * child + 1) {
+            if (child + 1 < limit) {
+                events.add(new SortingEvent(SortingEventType.Comparison, child + 1, child));
 
-        while (ch < limit) {
-            if (ch + 1 < limit) {
-                events.add(new SortingEvent(SortingEventType.Comparison, ch + 1, ch));
-
-                if (nums[ch + 1] > nums[ch]) {
-                    ch++;
+                if (nums[child + 1] > nums[child]) {
+                    child++;
                 }
             }
 
-            events.add(new SortingEvent(SortingEventType.Comparison, ch, (ch - 1) / 2));
+            int parent = (child - 1) / 2;
 
-            if (nums[ch] <= nums[(ch - 1) / 2]) {
+            events.add(new SortingEvent(SortingEventType.Comparison, child, parent));
+
+            if (nums[child] <= nums[parent]) {
                 return;
             }
 
-            swap(nums, ch, (ch - 1) / 2);
-            events.add(new SortingEvent(SortingEventType.Swap, ch, (ch - 1) / 2));
-
-            ch = 2 * ch + 1;
+            swap(nums, child, parent);
+            events.add(new SortingEvent(SortingEventType.Swap, child, parent));
         }
     }
 }
