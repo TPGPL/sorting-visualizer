@@ -9,5 +9,6 @@ public enum SortingAlgorithm {
     BubbleSort,
     CocktailShakerSort,
     ShellSort,
-    OddEvenSort
+    OddEvenSort,
+    CombSort
 }
