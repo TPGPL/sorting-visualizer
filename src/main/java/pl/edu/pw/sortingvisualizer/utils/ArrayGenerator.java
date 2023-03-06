@@ -1,4 +1,4 @@
-package pl.edu.pw.sortingvisualizer;
+package pl.edu.pw.sortingvisualizer.utils;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;

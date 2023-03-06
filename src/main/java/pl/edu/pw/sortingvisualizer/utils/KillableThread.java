@@ -1,4 +1,4 @@
-package pl.edu.pw.sortingvisualizer;
+package pl.edu.pw.sortingvisualizer.utils;
 
 public class KillableThread extends Thread {
     protected volatile boolean isKilled;

@@ -8,4 +8,6 @@ module pl.edu.pw.sortingvisualizer {
 
     opens pl.edu.pw.sortingvisualizer to javafx.fxml;
     exports pl.edu.pw.sortingvisualizer;
+    exports pl.edu.pw.sortingvisualizer.utils;
+    opens pl.edu.pw.sortingvisualizer.utils to javafx.fxml;
 }

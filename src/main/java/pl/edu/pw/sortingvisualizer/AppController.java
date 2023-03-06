@@ -12,6 +12,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import pl.edu.pw.sortingvisualizer.sorters.*;
 import pl.edu.pw.sortingvisualizer.sortingevent.SortingEvent;
+import pl.edu.pw.sortingvisualizer.utils.ArrayGenerator;
+import pl.edu.pw.sortingvisualizer.utils.KillableThread;
 
 import java.text.DecimalFormat;
 import java.time.Duration;
