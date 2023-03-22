@@ -216,6 +216,10 @@ public class AppController {
     private void performCheckAnimation() {
         try {
             for (int i = 0; i < drawRectangles.length - 1; i++) {
+                if (runner.isKilled()) {
+                    return;
+                }
+
                 performComparisonAnimation(i, i + 1);
                 Thread.sleep(getSleepDuration());
 
@@ -229,7 +233,6 @@ public class AppController {
 
                 Thread.sleep(getSleepDuration());
             }
-
         } catch (InterruptedException ignored) {
         }
     }
