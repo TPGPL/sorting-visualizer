@@ -53,7 +53,10 @@ public class AppController {
         updateDelayLabel();
         updateSizeLabel();
         delaySlider.valueProperty().addListener((observableValue, oldValue, newValue) -> updateDelayLabel());
-        sizeSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> updateSizeLabel());
+        sizeSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> {
+            updateSizeLabel();
+            generateArray();
+        });
         sortChoiceBox.getItems().addAll(SortingAlgorithm.values());
         sortChoiceBox.setValue(DEFAULT_SORTING_ALGORITHM);
         gc.fillText("<no array generated>", 0, drawPanel.getHeight() - 10);
