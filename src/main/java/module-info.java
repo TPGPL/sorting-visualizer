@@ -8,4 +8,5 @@ module pl.edu.pw.sortingvisualizer {
     exports pl.edu.pw.sortingvisualizer;
     exports pl.edu.pw.sortingvisualizer.utils;
     exports pl.edu.pw.sortingvisualizer.sorters;
+    exports pl.edu.pw.sortingvisualizer.sortingevent;
 }
