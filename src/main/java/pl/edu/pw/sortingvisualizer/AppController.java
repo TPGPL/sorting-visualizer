@@ -117,9 +117,10 @@ public class AppController {
 
         double elemWidth = drawPanel.getWidth() / drawRectangles.length;
 
+        // rounding causes white bars to appear, so the general element width is increased by 20% to hide them;
         for (int i = 0; i < drawRectangles.length; i++) {
             gc.setFill(drawRectangles[i].getFill());
-            gc.fillRect(i * elemWidth, drawPanel.getHeight() - drawRectangles[i].getHeight(), elemWidth, drawRectangles[i].getHeight());
+            gc.fillRect(i * elemWidth, drawPanel.getHeight() - drawRectangles[i].getHeight(), 1.2*elemWidth, drawRectangles[i].getHeight());
         }
     }
 
