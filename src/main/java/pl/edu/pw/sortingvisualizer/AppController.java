@@ -19,9 +19,9 @@ import java.text.DecimalFormat;
 import java.time.Duration;
 import java.util.List;
 
-public class AppController {
+import static pl.edu.pw.sortingvisualizer.Properties.*;
 
-    private final static SortingAlgorithm DEFAULT_SORTING_ALGORITHM = SortingAlgorithm.BubbleSort;
+public class AppController {
     @FXML
     private ChoiceBox<SortingAlgorithm> sortChoiceBox;
     @FXML
@@ -120,7 +120,7 @@ public class AppController {
         // rounding causes white bars to appear, so the general element width is increased by 20% to hide them;
         for (int i = 0; i < drawRectangles.length; i++) {
             gc.setFill(drawRectangles[i].getFill());
-            gc.fillRect(i * elemWidth, drawPanel.getHeight() - drawRectangles[i].getHeight(), 1.2*elemWidth, drawRectangles[i].getHeight());
+            gc.fillRect(i * elemWidth, drawPanel.getHeight() - drawRectangles[i].getHeight(), 1.2 * elemWidth, drawRectangles[i].getHeight());
         }
     }
 
@@ -186,33 +186,33 @@ public class AppController {
 
     private void performComparisonAnimation(int firstIndex, int secondIndex) {
         try {
-            recolorRectangles(Color.RED, firstIndex, secondIndex);
+            recolorRectangles(DEFAULT_COMPARISON_COLOR, firstIndex, secondIndex);
             Thread.sleep(getSleepDuration());
-            recolorRectangles(Color.BLACK, firstIndex, secondIndex);
+            recolorRectangles(DEFAULT_BAR_COLOR, firstIndex, secondIndex);
         } catch (InterruptedException ignored) {
         }
     }
 
     private void performSwapAnimation(int firstIndex, int secondIndex) {
         try {
-            recolorRectangles(Color.TURQUOISE, firstIndex, secondIndex);
+            recolorRectangles(DEFAULT_SWAP_COLOR, firstIndex, secondIndex);
             Thread.sleep(getSleepDuration());
             swapRectangles(firstIndex, secondIndex);
             Platform.runLater(this::drawRectangleArray);
             Thread.sleep(getSleepDuration());
-            recolorRectangles(Color.BLACK, firstIndex, secondIndex);
+            recolorRectangles(DEFAULT_BAR_COLOR, firstIndex, secondIndex);
         } catch (InterruptedException ignored) {
         }
     }
 
     private void performOverwriteAnimation(int index, double newValue) {
         try {
-            recolorRectangles(Color.GOLD, index);
+            recolorRectangles(DEFAULT_OVERWRITE_COLOR, index);
             Thread.sleep(getSleepDuration());
             drawRectangles[index].setHeight(newValue);
             Platform.runLater(this::drawRectangleArray);
             Thread.sleep(getSleepDuration());
-            recolorRectangles(Color.BLACK, index);
+            recolorRectangles(DEFAULT_BAR_COLOR, index);
         } catch (InterruptedException ignored) {
         }
     }
@@ -228,9 +228,9 @@ public class AppController {
                 Thread.sleep(getSleepDuration());
 
                 if (drawRectangles[i].getHeight() <= drawRectangles[i + 1].getHeight()) {
-                    recolorRectangles(Color.GREEN, i, i + 1);
+                    recolorRectangles(DEFAULT_SORTED_COLOR, i, i + 1);
                 } else {
-                    recolorRectangles(Color.CRIMSON, i, i + 1);
+                    recolorRectangles(DEFAULT_UNSORTED_COLOR, i, i + 1);
 
                     return;
                 }
