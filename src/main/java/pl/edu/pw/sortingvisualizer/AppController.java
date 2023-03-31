@@ -253,3 +253,9 @@ public class AppController {
         return Duration.ofNanos((long) (delaySlider.getValue() * 1000000));
     }
 }
+// TODO:
+//  - specyfikacja funkcjonalna, implementacyjna
+//  - step-by-step wizualizacja
+//  - rozne typy tablic do wygenerowania
+//  - diagram klas
+//  - wpisywalny array size (?)
