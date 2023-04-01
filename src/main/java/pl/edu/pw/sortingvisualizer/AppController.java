@@ -249,7 +249,6 @@ public class AppController {
 // TODO:
 //  - specyfikacja funkcjonalna, implementacyjna
 //  - step-by-step wizualizacja
-//  - rozne typy tablic do wygenerowania
 //  - diagram klas
 //  - wpisywalny array size (?)
 //  - rectangleConv -> klasa RectangleArrayUtils
