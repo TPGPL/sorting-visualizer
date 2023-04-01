@@ -10,9 +10,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import pl.edu.pw.sortingvisualizer.generators.ArrayGenerator;
+import pl.edu.pw.sortingvisualizer.generators.GeneratorType;
 import pl.edu.pw.sortingvisualizer.sorters.*;
 import pl.edu.pw.sortingvisualizer.sortingevent.SortingEvent;
-import pl.edu.pw.sortingvisualizer.utils.ArrayGenerator;
+import static pl.edu.pw.sortingvisualizer.utils.ArrayGenerator.convertDoubleToRectangleArray;
 import pl.edu.pw.sortingvisualizer.utils.KillableThread;
 
 import java.text.DecimalFormat;
@@ -22,6 +24,8 @@ import java.util.List;
 import static pl.edu.pw.sortingvisualizer.Properties.*;
 
 public class AppController {
+    @FXML
+    private ChoiceBox<GeneratorType> arrayChoiceBox;
     @FXML
     private ChoiceBox<SortingAlgorithm> sortChoiceBox;
     @FXML
@@ -56,6 +60,8 @@ public class AppController {
             updateSizeLabel();
             generateArray();
         });
+        arrayChoiceBox.getItems().addAll(GeneratorType.values());
+        arrayChoiceBox.setValue(DEFAULT_ARRAY_TYPE);
         sortChoiceBox.getItems().addAll(SortingAlgorithm.values());
         sortChoiceBox.setValue(DEFAULT_SORTING_ALGORITHM);
         gc.fillText("<no array generated>", 0, drawPanel.getHeight() - 10);
@@ -64,8 +70,9 @@ public class AppController {
     @FXML
     public void generateArray() {
         int elemCount = (int) sizeSlider.getValue();
-        sortArray = ArrayGenerator.generateArray(elemCount, drawPanel.getHeight());
-        drawRectangles = ArrayGenerator.convertDoubleToRectangleArray(sortArray, drawPanel.getWidth());
+        ArrayGenerator generator = GeneratorType.getGeneratorFromValue(arrayChoiceBox.getValue());
+        sortArray = generator.generateArray(elemCount, drawPanel.getHeight());
+        drawRectangles = convertDoubleToRectangleArray(sortArray, drawPanel.getWidth());
 
         drawRectangleArray();
         sortButton.setDisable(false);
@@ -129,6 +136,7 @@ public class AppController {
         sizeSlider.setDisable(false);
         generateButton.setDisable(false);
         sortChoiceBox.setDisable(false);
+        arrayChoiceBox.setDisable(false);
         sortButton.setText("Sort");
         sortButton.setDisable(true);
     }
@@ -138,6 +146,7 @@ public class AppController {
         sizeSlider.setDisable(true);
         generateButton.setDisable(true);
         sortChoiceBox.setDisable(true);
+        arrayChoiceBox.setDisable(true);
         sortButton.setText("Stop");
     }
 

@@ -3,24 +3,7 @@ package pl.edu.pw.sortingvisualizer.utils;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-import java.util.Random;
-
 public class ArrayGenerator {
-    public static double[] generateArray(int length, double upperBound) {
-        if (length <= 0 || upperBound <= 0) {
-            throw new IllegalArgumentException("The params (length, upperBound) must be positive.");
-        }
-
-        double[] nums = new double[length];
-        Random rand = new Random();
-
-        for (int i = 0; i < length; i++) {
-            nums[i] = rand.nextDouble() * upperBound;
-        }
-
-        return nums;
-    }
-
     public static Rectangle[] convertDoubleToRectangleArray(double[] nums, double areaWidth) {
         if (nums == null) {
             throw new IllegalArgumentException("The array must not be null.");
