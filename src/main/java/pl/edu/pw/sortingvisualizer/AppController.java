@@ -242,3 +242,5 @@ public class AppController {
 //  - rozne typy tablic do wygenerowania
 //  - diagram klas
 //  - wpisywalny array size (?)
+//  - rectangleConv -> klasa RectangleArrayUtils
+//  - dekompozycja animacji -> rozbij animacje na pojedyńcze akcje
