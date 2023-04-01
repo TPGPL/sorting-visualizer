@@ -41,7 +41,6 @@ public class AppController {
     private double[] sortArray;
     private Rectangle[] drawRectangles;
     private GraphicsContext gc;
-    private VisualizableSorter sorter;
     private KillableThread runner;
     private DecimalFormat formatter;
 
@@ -83,8 +82,8 @@ public class AppController {
         }
 
         disableUI();
-        selectSortingAlgorithm();
 
+        VisualizableSorter sorter = SortingAlgorithm.getSorterFromValue(sortChoiceBox.getValue());
         List<SortingEvent> events = sorter.sort(sortArray);
 
         runner = new KillableThread() {
@@ -150,22 +149,6 @@ public class AppController {
     @FXML
     private void updateSizeLabel() {
         sizeLabel.setText(String.format("Array size (%d)", (int) sizeSlider.getValue()));
-    }
-
-    @FXML
-    private void selectSortingAlgorithm() {
-        sorter = switch (sortChoiceBox.getValue()) {
-            case BubbleSort -> new BubbleSort();
-            case HeapSort -> new HeapSort();
-            case QuickSort -> new QuickSort();
-            case InsertionSort -> new InsertionSort();
-            case SelectionSort -> new SelectionSort();
-            case MergeSort -> new MergeSort();
-            case CocktailShakerSort -> new CocktailShakerSort();
-            case ShellSort -> new ShellSort();
-            case OddEvenSort -> new OddEvenSort();
-            case CombSort -> new CombSort();
-        };
     }
 
     private void swapRectangles(int firstIndex, int secondIndex) {
