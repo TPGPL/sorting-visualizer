@@ -193,5 +193,4 @@ public class AppController {
 //  - specyfikacja funkcjonalna, implementacyjna
 //  - step-by-step wizualizacja
 //  - diagram klas
-//  - wpisywalny array size (?)
-//  - dekompozycja animacji -> rozbij animacje na pojedyńcze akcje
+//  - zaimplementuj check animation dla nowej logiki
