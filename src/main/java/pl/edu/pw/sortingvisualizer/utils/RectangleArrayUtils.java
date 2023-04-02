@@ -3,7 +3,7 @@ package pl.edu.pw.sortingvisualizer.utils;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class ArrayGenerator {
+public class RectangleArrayUtils {
     public static Rectangle[] convertDoubleToRectangleArray(double[] nums, double areaWidth) {
         if (nums == null) {
             throw new IllegalArgumentException("The array must not be null.");
@@ -17,5 +17,19 @@ public class ArrayGenerator {
         }
 
         return rectArray;
+    }
+
+    public static void swapRectangles(Rectangle[] rectArray, int firstIndex, int secondIndex) {
+        if (firstIndex != secondIndex) {
+            Rectangle tmp = rectArray[firstIndex];
+            rectArray[firstIndex] = rectArray[secondIndex];
+            rectArray[secondIndex] = tmp;
+        }
+    }
+
+    public static void recolorRectangles(Rectangle[] rectArray, Color color, int... indices) {
+        for (int i : indices) {
+            rectArray[i].setFill(color);
+        }
     }
 }

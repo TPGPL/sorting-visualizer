@@ -8,20 +8,19 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import pl.edu.pw.sortingvisualizer.generators.ArrayGenerator;
 import pl.edu.pw.sortingvisualizer.generators.GeneratorType;
 import pl.edu.pw.sortingvisualizer.sorters.VisualizableSorter;
 import pl.edu.pw.sortingvisualizer.sorters.SortingAlgorithm;
 import pl.edu.pw.sortingvisualizer.sortingevent.SortingEvent;
-import static pl.edu.pw.sortingvisualizer.utils.ArrayGenerator.convertDoubleToRectangleArray;
 import pl.edu.pw.sortingvisualizer.utils.KillableThread;
 
 import java.text.DecimalFormat;
 import java.time.Duration;
 import java.util.List;
 
+import static pl.edu.pw.sortingvisualizer.utils.RectangleArrayUtils.*;
 import static pl.edu.pw.sortingvisualizer.Properties.*;
 
 public class AppController {
@@ -161,14 +160,6 @@ public class AppController {
         sizeLabel.setText(String.format("Array size (%d)", (int) sizeSlider.getValue()));
     }
 
-    private void swapRectangles(int firstIndex, int secondIndex) {
-        if (firstIndex != secondIndex) {
-            Rectangle tmp = drawRectangles[firstIndex];
-            drawRectangles[firstIndex] = drawRectangles[secondIndex];
-            drawRectangles[secondIndex] = tmp;
-        }
-    }
-
     private void performAnimation(SortingEvent event) {
         switch (event.getType()) {
             case Swap -> performSwapAnimation(event.getFirstElementIndex(), event.getSecondElementIndex());
@@ -179,33 +170,39 @@ public class AppController {
 
     private void performComparisonAnimation(int firstIndex, int secondIndex) {
         try {
-            recolorRectangles(DEFAULT_COMPARISON_COLOR, firstIndex, secondIndex);
+            recolorRectangles(drawRectangles, DEFAULT_COMPARISON_COLOR, firstIndex, secondIndex);
+            Platform.runLater(this::drawRectangleArray);
             Thread.sleep(getSleepDuration());
-            recolorRectangles(DEFAULT_BAR_COLOR, firstIndex, secondIndex);
+            recolorRectangles(drawRectangles, DEFAULT_BAR_COLOR, firstIndex, secondIndex);
+            Platform.runLater(this::drawRectangleArray);
         } catch (InterruptedException ignored) {
         }
     }
 
     private void performSwapAnimation(int firstIndex, int secondIndex) {
         try {
-            recolorRectangles(DEFAULT_SWAP_COLOR, firstIndex, secondIndex);
-            Thread.sleep(getSleepDuration());
-            swapRectangles(firstIndex, secondIndex);
+            recolorRectangles(drawRectangles, DEFAULT_SWAP_COLOR, firstIndex, secondIndex);
             Platform.runLater(this::drawRectangleArray);
             Thread.sleep(getSleepDuration());
-            recolorRectangles(DEFAULT_BAR_COLOR, firstIndex, secondIndex);
+            swapRectangles(drawRectangles, firstIndex, secondIndex);
+            Platform.runLater(this::drawRectangleArray);
+            Thread.sleep(getSleepDuration());
+            recolorRectangles(drawRectangles, DEFAULT_BAR_COLOR, firstIndex, secondIndex);
+            Platform.runLater(this::drawRectangleArray);
         } catch (InterruptedException ignored) {
         }
     }
 
     private void performOverwriteAnimation(int index, double newValue) {
         try {
-            recolorRectangles(DEFAULT_OVERWRITE_COLOR, index);
+            recolorRectangles(drawRectangles, DEFAULT_OVERWRITE_COLOR, index);
+            Platform.runLater(this::drawRectangleArray);
             Thread.sleep(getSleepDuration());
             drawRectangles[index].setHeight(newValue);
             Platform.runLater(this::drawRectangleArray);
             Thread.sleep(getSleepDuration());
-            recolorRectangles(DEFAULT_BAR_COLOR, index);
+            recolorRectangles(drawRectangles, DEFAULT_BAR_COLOR, index);
+            Platform.runLater(this::drawRectangleArray);
         } catch (InterruptedException ignored) {
         }
     }
@@ -221,9 +218,11 @@ public class AppController {
                 Thread.sleep(getSleepDuration());
 
                 if (drawRectangles[i].getHeight() <= drawRectangles[i + 1].getHeight()) {
-                    recolorRectangles(DEFAULT_SORTED_COLOR, i, i + 1);
+                    recolorRectangles(drawRectangles, DEFAULT_SORTED_COLOR, i, i + 1);
+                    Platform.runLater(this::drawRectangleArray);
                 } else {
-                    recolorRectangles(DEFAULT_UNSORTED_COLOR, i, i + 1);
+                    recolorRectangles(drawRectangles, DEFAULT_UNSORTED_COLOR, i, i + 1);
+                    Platform.runLater(this::drawRectangleArray);
 
                     return;
                 }
@@ -232,14 +231,6 @@ public class AppController {
             }
         } catch (InterruptedException ignored) {
         }
-    }
-
-    private void recolorRectangles(Color color, int... indices) {
-        for (int i : indices) {
-            drawRectangles[i].setFill(color);
-        }
-
-        Platform.runLater(this::drawRectangleArray);
     }
 
     private Duration getSleepDuration() {
@@ -251,5 +242,4 @@ public class AppController {
 //  - step-by-step wizualizacja
 //  - diagram klas
 //  - wpisywalny array size (?)
-//  - rectangleConv -> klasa RectangleArrayUtils
 //  - dekompozycja animacji -> rozbij animacje na pojedyńcze akcje
