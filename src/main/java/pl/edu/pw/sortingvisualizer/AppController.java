@@ -97,8 +97,7 @@ public class AppController {
     public void sortAction() {
         toggleSortingUI();
 
-        // allows resuming sorting animation if it was stopped before finishing
-        if (pendingAnimations == null || !pendingAnimations.hasNext()) {
+        if (pendingAnimations == null) {
             VisualizableSorter sorter = SortingAlgorithm.getSorterFromValue(sortChoiceBox.getValue());
             SortingAnimation animations = sorter.sort(sortArray);
             pendingAnimations = animations.iterator();
@@ -132,13 +131,15 @@ public class AppController {
     public void stepAction() {
         toggleSortingUI();
 
-        if (pendingAnimations == null || !pendingAnimations.hasNext()) {
+        if (pendingAnimations == null) {
             VisualizableSorter sorter = SortingAlgorithm.getSorterFromValue(sortChoiceBox.getValue());
             SortingAnimation animations = sorter.sort(sortArray);
             pendingAnimations = animations.iterator();
         }
 
-        performAnimation(pendingAnimations.next());
+        if (pendingAnimations.hasNext()) {
+            performAnimation(pendingAnimations.next());
+        }
 
         toggleIdleUI();
     }
@@ -169,6 +170,7 @@ public class AppController {
         generateButton.setDisable(false);
         stopButton.setDisable(true);
 
+        // allows resuming sorting animation if it was stopped before finishing
         if (pendingAnimations != null && pendingAnimations.hasNext()) {
             sortButton.setDisable(false);
             stepButton.setDisable(false);
