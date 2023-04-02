@@ -63,7 +63,11 @@ public class AppController {
         delaySlider.valueProperty().addListener((observableValue, oldValue, newValue) -> updateDelayLabel());
         sizeSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> {
             updateSizeLabel();
-            generateArray();
+
+            // only generate array when sorting animation is ongoing
+            if (runner == null || !runner.isAlive()) {
+                generateArray();
+            }
         });
         arrayChoiceBox.getItems().addAll(GeneratorType.values());
         arrayChoiceBox.setValue(DEFAULT_ARRAY_TYPE);
@@ -135,14 +139,12 @@ public class AppController {
 
     @FXML
     private void enableUI() {
-        sizeSlider.setDisable(false);
         generateButton.setDisable(false);
         stopButton.setDisable(true);
     }
 
     @FXML
     private void disableUI() {
-        sizeSlider.setDisable(true);
         generateButton.setDisable(true);
         sortButton.setDisable(true);
         stopButton.setDisable(false);
