@@ -89,8 +89,7 @@ public class AppController {
         pendingAnimations = null;
 
         drawRectangleArray();
-        sortButton.setDisable(false);
-        stepButton.setDisable(false);
+        togglePostGenerationUI();
     }
 
     @FXML
@@ -166,12 +165,21 @@ public class AppController {
     }
 
     @FXML
+    private void togglePostGenerationUI() {
+        sortButton.setDisable(false);
+        stepButton.setDisable(false);
+        sortButton.setText("Sort");
+    }
+
+    @FXML
     private void toggleIdleUI() {
         generateButton.setDisable(false);
         stopButton.setDisable(true);
+        sortButton.setText("Sort");
 
         // allows resuming sorting animation if it was stopped before finishing
         if (pendingAnimations != null && pendingAnimations.hasNext()) {
+            sortButton.setText("Resume sorting");
             sortButton.setDisable(false);
             stepButton.setDisable(false);
         }
