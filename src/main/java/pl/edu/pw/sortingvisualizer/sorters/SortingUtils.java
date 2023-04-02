@@ -1,6 +1,6 @@
 package pl.edu.pw.sortingvisualizer.sorters;
 
-public class SortingUtils {
+class SortingUtils {
     public static void swap(double[] nums, int firstIndex, int secondIndex) {
         if (nums != null && firstIndex != secondIndex && isIndexInRange(nums.length, firstIndex) && isIndexInRange(nums.length, secondIndex)) {
             double tmp = nums[firstIndex];

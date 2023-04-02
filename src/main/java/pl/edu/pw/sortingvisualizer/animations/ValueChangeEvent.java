@@ -5,7 +5,7 @@ import javafx.util.Pair;
 import java.util.HashMap;
 
 public class ValueChangeEvent extends AnimationEvent {
-    HashMap<Integer, Double> newValues;
+    private final HashMap<Integer, Double> newValues;
 
     @SafeVarargs
     public ValueChangeEvent(Pair<Integer,Double>... valueChanges) {
