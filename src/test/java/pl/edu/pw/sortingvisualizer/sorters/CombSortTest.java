@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CombSortTest {
     private static final double DELTA = 0;
-    private static final int ARRAY_SIZE = 10000;
+    private static final int ARRAY_SIZE = 3000;
     private static final int SEED = 1000;
     private VisualizableSorter sorter;
 

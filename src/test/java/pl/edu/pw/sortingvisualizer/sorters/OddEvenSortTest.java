@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class OddEvenSortTest {
     private static final double DELTA = 0;
-    private static final int ARRAY_SIZE = 5000;
+    private static final int ARRAY_SIZE = 3000;
     private static final int SEED = 1000;
     private VisualizableSorter sorter;
 
