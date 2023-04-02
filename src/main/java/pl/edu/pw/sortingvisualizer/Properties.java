@@ -11,6 +11,4 @@ public class Properties {
     public final static Color DEFAULT_COMPARISON_COLOR = Color.RED;
     public final static Color DEFAULT_SWAP_COLOR = Color.TURQUOISE;
     public final static Color DEFAULT_OVERWRITE_COLOR = Color.GOLD;
-    public final static Color DEFAULT_SORTED_COLOR = Color.GREEN;
-    public final static Color DEFAULT_UNSORTED_COLOR = Color.CRIMSON;
 }

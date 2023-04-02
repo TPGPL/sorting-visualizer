@@ -6,8 +6,4 @@ public class KillableThread extends Thread {
     public void kill() {
         isKilled = true;
     }
-
-    public boolean isKilled() {
-        return isKilled;
-    }
 }

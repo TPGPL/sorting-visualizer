@@ -18,18 +18,4 @@ public class RectangleArrayUtils {
 
         return rectArray;
     }
-
-    public static void swapRectangles(Rectangle[] rectArray, int firstIndex, int secondIndex) {
-        if (firstIndex != secondIndex) {
-            Rectangle tmp = rectArray[firstIndex];
-            rectArray[firstIndex] = rectArray[secondIndex];
-            rectArray[secondIndex] = tmp;
-        }
-    }
-
-    public static void recolorRectangles(Rectangle[] rectArray, Color color, int... indices) {
-        for (int i : indices) {
-            rectArray[i].setFill(color);
-        }
-    }
 }
