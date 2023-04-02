@@ -47,6 +47,8 @@ public class AppController {
     @FXML
     private Button stopButton;
     @FXML
+    private Button stepButton;
+    @FXML
     private Canvas drawPanel;
     private double[] sortArray;
     private Rectangle[] drawRectangles;
@@ -88,6 +90,7 @@ public class AppController {
 
         drawRectangleArray();
         sortButton.setDisable(false);
+        stepButton.setDisable(false);
     }
 
     @FXML
@@ -126,6 +129,21 @@ public class AppController {
     }
 
     @FXML
+    public void stepAction() {
+        disableUI();
+
+        if (pendingAnimations == null || !pendingAnimations.hasNext()) {
+            VisualizableSorter sorter = SortingAlgorithm.getSorterFromValue(sortChoiceBox.getValue());
+            SortingAnimation animations = sorter.sort(sortArray);
+            pendingAnimations = animations.iterator();
+        }
+
+        performAnimation(pendingAnimations.next());
+
+        enableUI();
+    }
+
+    @FXML
     public void stopAction() {
         if (runner != null && runner.isAlive()) {
             runner.kill();
@@ -153,12 +171,14 @@ public class AppController {
 
         if (pendingAnimations != null && pendingAnimations.hasNext()) {
             sortButton.setDisable(false);
+            stepButton.setDisable(false);
         }
     }
 
     @FXML
     private void disableUI() {
         generateButton.setDisable(true);
+        stepButton.setDisable(true);
         sortButton.setDisable(true);
         stopButton.setDisable(false);
     }

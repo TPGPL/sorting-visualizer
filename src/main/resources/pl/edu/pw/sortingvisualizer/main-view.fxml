@@ -33,7 +33,7 @@
          <Label text="Delay [ms]" fx:id="delayLabel" />
          <Slider fx:id="delaySlider" blockIncrement="0.25" majorTickUnit="100.0" min="0.25" minorTickCount="1" showTickLabels="true" value="10.0" />
       </VBox>
-      <Button mnemonicParsing="false" prefHeight="200.0" prefWidth="150.0" text="Step" />
+      <Button fx:id="stepButton" disable="true" mnemonicParsing="false" onAction="#stepAction" prefHeight="200.0" prefWidth="150.0" text="Step" />
       <Button fx:id="sortButton" disable="true" mnemonicParsing="false" onAction="#sortAction" prefHeight="200.0" prefWidth="150.0" text="Sort" />
       <Button fx:id="stopButton" disable="true" mnemonicParsing="false" onAction="#stopAction" prefHeight="200.0" prefWidth="150.0" text="Stop" />
    </HBox>
