@@ -108,8 +108,6 @@ public class AppController {
                         performAnimation(animation);
                         Thread.sleep(getSleepDuration());
                     }
-
-                    performCheckAnimation();
                 } catch (InterruptedException ignored) {
                 }
 
@@ -184,43 +182,6 @@ public class AppController {
 
         for (int i : e) {
             drawRectangles[i].setFill(newColor);
-        }
-    }
-
-    private void performComparisonAnimation(int firstIndex, int secondIndex) {
-        try {
-            recolorRectangles(drawRectangles, DEFAULT_COMPARISON_COLOR, firstIndex, secondIndex);
-            Platform.runLater(this::drawRectangleArray);
-            Thread.sleep(getSleepDuration());
-            recolorRectangles(drawRectangles, DEFAULT_BAR_COLOR, firstIndex, secondIndex);
-            Platform.runLater(this::drawRectangleArray);
-        } catch (InterruptedException ignored) {
-        }
-    }
-
-    private void performCheckAnimation() {
-        try {
-            for (int i = 0; i < drawRectangles.length - 1; i++) {
-                if (runner.isKilled()) {
-                    return;
-                }
-
-                performComparisonAnimation(i, i + 1);
-                Thread.sleep(getSleepDuration());
-
-                if (drawRectangles[i].getHeight() <= drawRectangles[i + 1].getHeight()) {
-                    recolorRectangles(drawRectangles, DEFAULT_SORTED_COLOR, i, i + 1);
-                    Platform.runLater(this::drawRectangleArray);
-                } else {
-                    recolorRectangles(drawRectangles, DEFAULT_UNSORTED_COLOR, i, i + 1);
-                    Platform.runLater(this::drawRectangleArray);
-
-                    return;
-                }
-
-                Thread.sleep(getSleepDuration());
-            }
-        } catch (InterruptedException ignored) {
         }
     }
 
