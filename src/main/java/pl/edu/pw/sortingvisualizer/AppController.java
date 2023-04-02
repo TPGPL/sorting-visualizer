@@ -96,11 +96,7 @@ public class AppController {
     public void sortAction() {
         toggleSortingUI();
 
-        if (pendingAnimations == null) {
-            VisualizableSorter sorter = SortingAlgorithm.getSorterFromValue(sortChoiceBox.getValue());
-            SortingAnimation animations = sorter.sort(sortArray);
-            pendingAnimations = animations.iterator();
-        }
+        prepareSortingAnimation();
 
         runner = new KillableThread() {
             @Override
@@ -130,11 +126,7 @@ public class AppController {
     public void stepAction() {
         toggleSortingUI();
 
-        if (pendingAnimations == null) {
-            VisualizableSorter sorter = SortingAlgorithm.getSorterFromValue(sortChoiceBox.getValue());
-            SortingAnimation animations = sorter.sort(sortArray);
-            pendingAnimations = animations.iterator();
-        }
+        prepareSortingAnimation();
 
         if (pendingAnimations.hasNext()) {
             performAnimation(pendingAnimations.next());
@@ -148,6 +140,28 @@ public class AppController {
         if (runner != null && runner.isAlive()) {
             runner.kill();
             toggleIdleUI();
+        }
+    }
+
+    private void prepareSortingAnimation() {
+        if (pendingAnimations == null) {
+            VisualizableSorter sorter = SortingAlgorithm.getSorterFromValue(sortChoiceBox.getValue());
+            SortingAnimation animations = sorter.sort(sortArray);
+            addCheckAnimation(animations);
+            pendingAnimations = animations.iterator();
+        }
+    }
+
+    private void addCheckAnimation(SortingAnimation animations) {
+        for (int i = 0; i < sortArray.length - 1; i++) {
+            animations.addComparisonAnimation(i, i + 1);
+
+            if (sortArray[i] <= sortArray[i + 1]) {
+                animations.addSuccessfulSortAnimation(i, i + 1);
+            } else {
+                animations.addFailedSortAnimation(i, i + 1);
+                return;
+            }
         }
     }
 
