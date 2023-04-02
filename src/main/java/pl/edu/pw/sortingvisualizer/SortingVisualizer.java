@@ -10,6 +10,10 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class SortingVisualizer extends Application {
+    public static void main(String[] args) {
+        launch();
+    }
+
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(SortingVisualizer.class.getResource("main-view.fxml"));
@@ -20,9 +24,5 @@ public class SortingVisualizer extends Application {
         stage.getIcons().add(new Image(Objects.requireNonNull(SortingVisualizer.class.getResourceAsStream("icon.png"))));
         stage.setScene(scene);
         stage.show();
-    }
-
-    public static void main(String[] args) {
-        launch();
     }
 }

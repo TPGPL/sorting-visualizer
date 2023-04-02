@@ -16,16 +16,17 @@ import pl.edu.pw.sortingvisualizer.animations.SortingAnimation;
 import pl.edu.pw.sortingvisualizer.animations.ValueChangeEvent;
 import pl.edu.pw.sortingvisualizer.generators.ArrayGenerator;
 import pl.edu.pw.sortingvisualizer.generators.GeneratorType;
-import pl.edu.pw.sortingvisualizer.sorters.VisualizableSorter;
 import pl.edu.pw.sortingvisualizer.sorters.SortingAlgorithm;
+import pl.edu.pw.sortingvisualizer.sorters.VisualizableSorter;
 import pl.edu.pw.sortingvisualizer.utils.KillableThread;
 
 import java.text.DecimalFormat;
 import java.time.Duration;
 import java.util.Iterator;
 
-import static pl.edu.pw.sortingvisualizer.utils.RectangleArrayUtils.*;
-import static pl.edu.pw.sortingvisualizer.Properties.*;
+import static pl.edu.pw.sortingvisualizer.Properties.DEFAULT_ARRAY_TYPE;
+import static pl.edu.pw.sortingvisualizer.Properties.DEFAULT_SORTING_ALGORITHM;
+import static pl.edu.pw.sortingvisualizer.utils.RectangleArrayUtils.convertDoubleToRectangleArray;
 
 public class AppController {
     @FXML

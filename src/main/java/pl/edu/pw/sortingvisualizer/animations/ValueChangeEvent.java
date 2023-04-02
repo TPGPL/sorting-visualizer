@@ -8,11 +8,11 @@ public class ValueChangeEvent extends AnimationEvent {
     private final HashMap<Integer, Double> newValues;
 
     @SafeVarargs
-    public ValueChangeEvent(Pair<Integer,Double>... valueChanges) {
+    public ValueChangeEvent(Pair<Integer, Double>... valueChanges) {
         super();
         newValues = new HashMap<>();
 
-        for (Pair<Integer,Double> p : valueChanges) {
+        for (Pair<Integer, Double> p : valueChanges) {
             indices.add(p.getKey());
             newValues.put(p.getKey(), p.getValue());
         }

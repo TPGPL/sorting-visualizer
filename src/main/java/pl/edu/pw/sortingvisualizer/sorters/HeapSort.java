@@ -19,7 +19,7 @@ public class HeapSort implements VisualizableSorter {
         }
 
         animations = new SortingAnimation();
-        
+
         for (int i = 1; i < nums.length; i++) {
             heap_up(nums, i);
         }

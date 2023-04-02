@@ -13,7 +13,7 @@ public enum SortingAlgorithm {
     CombSort;
 
     public static VisualizableSorter getSorterFromValue(SortingAlgorithm e) {
-        return switch(e) {
+        return switch (e) {
             case MergeSort -> new MergeSort();
             case HeapSort -> new HeapSort();
             case QuickSort -> new QuickSort();
