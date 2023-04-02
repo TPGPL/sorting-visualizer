@@ -245,7 +245,3 @@ public class AppController {
         return Duration.ofNanos((long) (delaySlider.getValue() * 1000000));
     }
 }
-// TODO:
-//  - specyfikacja funkcjonalna, implementacyjna
-//  - diagram klas
-//  - zaimplementuj check animation dla nowej logiki
