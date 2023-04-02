@@ -1,31 +1,28 @@
 package pl.edu.pw.sortingvisualizer.sorters;
 
-import pl.edu.pw.sortingvisualizer.sortingevent.SortingEvent;
-import pl.edu.pw.sortingvisualizer.sortingevent.SortingEventType;
-
-import java.util.ArrayList;
-import java.util.List;
+import javafx.util.Pair;
+import pl.edu.pw.sortingvisualizer.animations.SortingAnimation;
 
 import static pl.edu.pw.sortingvisualizer.sorters.SortingUtils.swap;
 
 public class QuickSort implements VisualizableSorter {
-    private final List<SortingEvent> events;
+    private SortingAnimation animations;
 
     public QuickSort() {
-        events = new ArrayList<>();
+        animations = new SortingAnimation();
     }
 
     @Override
-    public List<SortingEvent> sort(double[] nums) {
+    public SortingAnimation sort(double[] nums) {
         if (nums == null) {
             throw new IllegalArgumentException("The nums array must not be null.");
         }
 
-        events.clear();
+        animations = new SortingAnimation();
 
         recqsort(nums, 0, nums.length - 1);
 
-        return events;
+        return animations;
     }
 
     private void recqsort(double[] nums, int start, int end) {
@@ -43,7 +40,7 @@ public class QuickSort implements VisualizableSorter {
 
         while (left < right) {
             while (left < right) {
-                events.add(new SortingEvent(SortingEventType.Comparison, left, start));
+                animations.addComparisonAnimation(left, start);
 
                 if (nums[left] >= nums[start]) {
                     break;
@@ -53,7 +50,7 @@ public class QuickSort implements VisualizableSorter {
             }
 
             while (left < right) {
-                events.add(new SortingEvent(SortingEventType.Comparison, right, start));
+                animations.addComparisonAnimation(right, start);
 
                 if (nums[right] < nums[start]) {
                     break;
@@ -63,7 +60,7 @@ public class QuickSort implements VisualizableSorter {
             }
 
             if (left != right) {
-                events.add(new SortingEvent(SortingEventType.Swap, left, right));
+                animations.addSwapAnimation(new Pair<>(left, nums[left]), new Pair<>(right, nums[right]));
                 swap(nums, left, right);
             }
         }
@@ -72,7 +69,7 @@ public class QuickSort implements VisualizableSorter {
             left--;
         }
 
-        events.add(new SortingEvent(SortingEventType.Swap, start, left));
+        animations.addSwapAnimation(new Pair<>(start, nums[start]), new Pair<>(left, nums[left]));
         swap(nums, start, left);
 
         return left;

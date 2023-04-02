@@ -1,22 +1,19 @@
 package pl.edu.pw.sortingvisualizer.sorters;
 
-import pl.edu.pw.sortingvisualizer.sortingevent.SortingEvent;
-import pl.edu.pw.sortingvisualizer.sortingevent.SortingEventType;
-
-import java.util.ArrayList;
-import java.util.List;
+import javafx.util.Pair;
+import pl.edu.pw.sortingvisualizer.animations.SortingAnimation;
 
 import static pl.edu.pw.sortingvisualizer.sorters.SortingUtils.swap;
 
 public class CocktailShakerSort implements VisualizableSorter {
 
     @Override
-    public List<SortingEvent> sort(double[] nums) {
+    public SortingAnimation sort(double[] nums) {
         if (nums == null) {
             throw new IllegalArgumentException("The nums array must not be null.");
         }
 
-        List<SortingEvent> events = new ArrayList<>();
+        SortingAnimation animations = new SortingAnimation();
         int left = 0;
         int right = nums.length - 1;
         boolean hasSwapped;
@@ -25,10 +22,10 @@ public class CocktailShakerSort implements VisualizableSorter {
             hasSwapped = false;
 
             for (int i = left; i < right; i++) {
-                events.add(new SortingEvent(SortingEventType.Comparison, i, i + 1));
+                animations.addComparisonAnimation(i, i + 1);
 
                 if (nums[i] > nums[i + 1]) {
-                    events.add(new SortingEvent(SortingEventType.Swap, i, i + 1));
+                    animations.addSwapAnimation(new Pair<>(i, nums[i]), new Pair<>(i + 1, nums[i + 1]));
                     swap(nums, i, i + 1);
 
                     hasSwapped = true;
@@ -38,10 +35,10 @@ public class CocktailShakerSort implements VisualizableSorter {
             right--;
 
             for (int i = right; i > left; i--) {
-                events.add(new SortingEvent(SortingEventType.Comparison, i, i - 1));
+                animations.addComparisonAnimation(i, i - 1);
 
                 if (nums[i - 1] > nums[i]) {
-                    events.add(new SortingEvent(SortingEventType.Swap, i, i - 1));
+                    animations.addSwapAnimation(new Pair<>(i, nums[i]), new Pair<>(i - 1, nums[i - 1]));
                     swap(nums, i, i - 1);
 
                     hasSwapped = true;
@@ -51,6 +48,6 @@ public class CocktailShakerSort implements VisualizableSorter {
             left++;
         } while (hasSwapped);
 
-        return events;
+        return animations;
     }
 }

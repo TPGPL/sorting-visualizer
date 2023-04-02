@@ -1,25 +1,21 @@
 package pl.edu.pw.sortingvisualizer.sorters;
 
-import pl.edu.pw.sortingvisualizer.sortingevent.SortingEvent;
-import pl.edu.pw.sortingvisualizer.sortingevent.SortingEventType;
-
-import java.util.ArrayList;
-import java.util.List;
+import pl.edu.pw.sortingvisualizer.animations.SortingAnimation;
 
 public class MergeSort implements VisualizableSorter {
-    private final List<SortingEvent> events;
+    private SortingAnimation animations;
 
     public MergeSort() {
-        events = new ArrayList<>();
+        animations = new SortingAnimation();
     }
 
     @Override
-    public List<SortingEvent> sort(double[] nums) {
+    public SortingAnimation sort(double[] nums) {
         if (nums == null) {
             throw new IllegalArgumentException("The nums array must not be null.");
         }
 
-        events.clear();
+        animations = new SortingAnimation();
 
         int length = nums.length;
         double[] tmp = new double[length];
@@ -40,7 +36,7 @@ public class MergeSort implements VisualizableSorter {
             System.arraycopy(src, 0, nums, 0, length);
         }
 
-        return events;
+        return animations;
     }
 
     private void merge(double[] src, int start, int mid, int end, double[] dst) {
@@ -49,27 +45,27 @@ public class MergeSort implements VisualizableSorter {
         int k = start;
 
         while (i < mid && j < end) {
-            events.add(new SortingEvent(SortingEventType.Comparison, i, j));
+            animations.addComparisonAnimation(i, j);
 
             if (src[i] <= src[j]) {
-                events.add(new SortingEvent(SortingEventType.Overwrite, k, src[i]));
+                animations.addOverwriteAnimation(k, src[i]);
 
                 dst[k++] = src[i++];
             } else {
-                events.add(new SortingEvent(SortingEventType.Overwrite, k, src[j]));
+                animations.addOverwriteAnimation(k, src[j]);
 
                 dst[k++] = src[j++];
             }
         }
 
         while (i < mid) {
-            events.add(new SortingEvent(SortingEventType.Overwrite, k, src[i]));
+            animations.addOverwriteAnimation(k, src[i]);
 
             dst[k++] = src[i++];
         }
 
         while (j < end) {
-            events.add(new SortingEvent(SortingEventType.Overwrite, k, src[j]));
+            animations.addOverwriteAnimation(k, src[j]);
 
             dst[k++] = src[j++];
         }

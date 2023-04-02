@@ -1,9 +1,7 @@
 package pl.edu.pw.sortingvisualizer.sorters;
 
-import pl.edu.pw.sortingvisualizer.sortingevent.SortingEvent;
-
-import java.util.List;
+import pl.edu.pw.sortingvisualizer.animations.SortingAnimation;
 
 public interface VisualizableSorter {
-    List<SortingEvent> sort(double[] nums);
+    SortingAnimation sort(double[] nums);
 }

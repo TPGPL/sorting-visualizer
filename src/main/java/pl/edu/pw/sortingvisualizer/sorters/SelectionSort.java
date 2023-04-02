@@ -1,27 +1,24 @@
 package pl.edu.pw.sortingvisualizer.sorters;
 
-import pl.edu.pw.sortingvisualizer.sortingevent.SortingEvent;
-import pl.edu.pw.sortingvisualizer.sortingevent.SortingEventType;
-
-import java.util.ArrayList;
-import java.util.List;
+import javafx.util.Pair;
+import pl.edu.pw.sortingvisualizer.animations.SortingAnimation;
 
 import static pl.edu.pw.sortingvisualizer.sorters.SortingUtils.swap;
 
 public class SelectionSort implements VisualizableSorter {
     @Override
-    public List<SortingEvent> sort(double[] nums) {
+    public SortingAnimation sort(double[] nums) {
         if (nums == null) {
             throw new IllegalArgumentException("The nums array must not be null.");
         }
 
-        List<SortingEvent> events = new ArrayList<>();
+        SortingAnimation animations = new SortingAnimation();
 
         for (int i = 0; i < nums.length - 1; i++) {
             int minIndex = i;
 
             for (int j = i + 1; j < nums.length; j++) {
-                events.add(new SortingEvent(SortingEventType.Comparison, j, minIndex));
+                animations.addComparisonAnimation(j, minIndex);
 
                 if (nums[j] < nums[minIndex]) {
                     minIndex = j;
@@ -29,12 +26,12 @@ public class SelectionSort implements VisualizableSorter {
             }
 
             if (i != minIndex) {
-                events.add(new SortingEvent(SortingEventType.Swap, i, minIndex));
+                animations.addSwapAnimation(new Pair<>(i, nums[i]), new Pair<>(minIndex, nums[minIndex]));
             }
 
             swap(nums, i, minIndex);
         }
 
-        return events;
+        return animations;
     }
 }
