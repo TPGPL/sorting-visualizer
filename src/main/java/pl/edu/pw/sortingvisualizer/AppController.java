@@ -68,7 +68,7 @@ public class AppController {
         sizeSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> {
             updateSizeLabel();
 
-            // only generate array when sorting animation is ongoing
+            // only generate array when sorting animation is not ongoing
             if (runner == null || !runner.isAlive()) {
                 generateArray();
             }
