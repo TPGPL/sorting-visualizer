@@ -44,6 +44,8 @@ public class AppController {
     @FXML
     private Button sortButton;
     @FXML
+    private Button stopButton;
+    @FXML
     private Canvas drawPanel;
     private double[] sortArray;
     private Rectangle[] drawRectangles;
@@ -83,14 +85,6 @@ public class AppController {
 
     @FXML
     public void sortAction() {
-        // takes action of a Stop button when the thread is active
-        if (runner != null && runner.isAlive()) {
-            runner.kill();
-            enableUI();
-
-            return;
-        }
-
         disableUI();
 
         VisualizableSorter sorter = SortingAlgorithm.getSorterFromValue(sortChoiceBox.getValue());
@@ -119,6 +113,14 @@ public class AppController {
     }
 
     @FXML
+    public void stopAction() {
+        if (runner != null && runner.isAlive()) {
+            runner.kill();
+            enableUI();
+        }
+    }
+
+    @FXML
     private void drawRectangleArray() {
         gc.clearRect(0, 0, drawPanel.getWidth(), drawPanel.getHeight());
 
@@ -138,8 +140,7 @@ public class AppController {
         generateButton.setDisable(false);
         sortChoiceBox.setDisable(false);
         arrayChoiceBox.setDisable(false);
-        sortButton.setText("Sort");
-        sortButton.setDisable(true);
+        stopButton.setDisable(true);
     }
 
     @FXML
@@ -148,7 +149,8 @@ public class AppController {
         generateButton.setDisable(true);
         sortChoiceBox.setDisable(true);
         arrayChoiceBox.setDisable(true);
-        sortButton.setText("Stop");
+        sortButton.setDisable(true);
+        stopButton.setDisable(false);
     }
 
     @FXML
