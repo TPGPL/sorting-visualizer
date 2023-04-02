@@ -223,6 +223,5 @@ public class AppController {
 }
 // TODO:
 //  - specyfikacja funkcjonalna, implementacyjna
-//  - step-by-step wizualizacja
 //  - diagram klas
 //  - zaimplementuj check animation dla nowej logiki
