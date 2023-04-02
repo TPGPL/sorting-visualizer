@@ -22,6 +22,7 @@ import pl.edu.pw.sortingvisualizer.utils.KillableThread;
 
 import java.text.DecimalFormat;
 import java.time.Duration;
+import java.util.Iterator;
 
 import static pl.edu.pw.sortingvisualizer.utils.RectangleArrayUtils.*;
 import static pl.edu.pw.sortingvisualizer.Properties.*;
@@ -52,6 +53,7 @@ public class AppController {
     private GraphicsContext gc;
     private KillableThread runner;
     private DecimalFormat formatter;
+    private Iterator<AnimationEvent> pendingAnimations;
 
     @FXML
     public void initialize() {
@@ -82,6 +84,7 @@ public class AppController {
         ArrayGenerator generator = GeneratorType.getGeneratorFromValue(arrayChoiceBox.getValue());
         sortArray = generator.generateArray(elemCount, drawPanel.getHeight());
         drawRectangles = convertDoubleToRectangleArray(sortArray, drawPanel.getWidth());
+        pendingAnimations = null;
 
         drawRectangleArray();
         sortButton.setDisable(false);
@@ -91,17 +94,23 @@ public class AppController {
     public void sortAction() {
         disableUI();
 
-        VisualizableSorter sorter = SortingAlgorithm.getSorterFromValue(sortChoiceBox.getValue());
-        SortingAnimation animations = sorter.sort(sortArray);
+        // allows resuming sorting animation if it was stopped before finishing
+        if (pendingAnimations == null || !pendingAnimations.hasNext()) {
+            VisualizableSorter sorter = SortingAlgorithm.getSorterFromValue(sortChoiceBox.getValue());
+            SortingAnimation animations = sorter.sort(sortArray);
+            pendingAnimations = animations.iterator();
+        }
 
         runner = new KillableThread() {
             @Override
             public void run() {
                 try {
-                    for (AnimationEvent animation : animations) {
+                    while (pendingAnimations.hasNext()) {
                         if (isKilled) {
                             return;
                         }
+
+                        AnimationEvent animation = pendingAnimations.next();
 
                         performAnimation(animation);
                         Thread.sleep(getSleepDuration());
@@ -141,6 +150,10 @@ public class AppController {
     private void enableUI() {
         generateButton.setDisable(false);
         stopButton.setDisable(true);
+
+        if (pendingAnimations != null && pendingAnimations.hasNext()) {
+            sortButton.setDisable(false);
+        }
     }
 
     @FXML
