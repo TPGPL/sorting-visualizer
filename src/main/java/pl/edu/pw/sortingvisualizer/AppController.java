@@ -95,7 +95,7 @@ public class AppController {
 
     @FXML
     public void sortAction() {
-        disableUI();
+        toggleSortingUI();
 
         // allows resuming sorting animation if it was stopped before finishing
         if (pendingAnimations == null || !pendingAnimations.hasNext()) {
@@ -121,7 +121,7 @@ public class AppController {
                 } catch (InterruptedException ignored) {
                 }
 
-                Platform.runLater(() -> enableUI());
+                Platform.runLater(() -> toggleIdleUI());
             }
         };
 
@@ -130,7 +130,7 @@ public class AppController {
 
     @FXML
     public void stepAction() {
-        disableUI();
+        toggleSortingUI();
 
         if (pendingAnimations == null || !pendingAnimations.hasNext()) {
             VisualizableSorter sorter = SortingAlgorithm.getSorterFromValue(sortChoiceBox.getValue());
@@ -140,14 +140,14 @@ public class AppController {
 
         performAnimation(pendingAnimations.next());
 
-        enableUI();
+        toggleIdleUI();
     }
 
     @FXML
     public void stopAction() {
         if (runner != null && runner.isAlive()) {
             runner.kill();
-            enableUI();
+            toggleIdleUI();
         }
     }
 
@@ -165,7 +165,7 @@ public class AppController {
     }
 
     @FXML
-    private void enableUI() {
+    private void toggleIdleUI() {
         generateButton.setDisable(false);
         stopButton.setDisable(true);
 
@@ -176,7 +176,7 @@ public class AppController {
     }
 
     @FXML
-    private void disableUI() {
+    private void toggleSortingUI() {
         generateButton.setDisable(true);
         stepButton.setDisable(true);
         sortButton.setDisable(true);
