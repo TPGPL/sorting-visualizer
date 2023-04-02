@@ -135,11 +135,8 @@ public class AppController {
 
     @FXML
     private void enableUI() {
-        delaySlider.setDisable(false);
         sizeSlider.setDisable(false);
         generateButton.setDisable(false);
-        sortChoiceBox.setDisable(false);
-        arrayChoiceBox.setDisable(false);
         stopButton.setDisable(true);
     }
 
@@ -147,8 +144,6 @@ public class AppController {
     private void disableUI() {
         sizeSlider.setDisable(true);
         generateButton.setDisable(true);
-        sortChoiceBox.setDisable(true);
-        arrayChoiceBox.setDisable(true);
         sortButton.setDisable(true);
         stopButton.setDisable(false);
     }
