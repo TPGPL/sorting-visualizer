@@ -8,17 +8,20 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import pl.edu.pw.sortingvisualizer.animations.AnimationEvent;
+import pl.edu.pw.sortingvisualizer.animations.ColorChangeEvent;
+import pl.edu.pw.sortingvisualizer.animations.SortingAnimation;
+import pl.edu.pw.sortingvisualizer.animations.ValueChangeEvent;
 import pl.edu.pw.sortingvisualizer.generators.ArrayGenerator;
 import pl.edu.pw.sortingvisualizer.generators.GeneratorType;
 import pl.edu.pw.sortingvisualizer.sorters.VisualizableSorter;
 import pl.edu.pw.sortingvisualizer.sorters.SortingAlgorithm;
-import pl.edu.pw.sortingvisualizer.sortingevent.SortingEvent;
 import pl.edu.pw.sortingvisualizer.utils.KillableThread;
 
 import java.text.DecimalFormat;
 import java.time.Duration;
-import java.util.List;
 
 import static pl.edu.pw.sortingvisualizer.utils.RectangleArrayUtils.*;
 import static pl.edu.pw.sortingvisualizer.Properties.*;
@@ -91,18 +94,18 @@ public class AppController {
         disableUI();
 
         VisualizableSorter sorter = SortingAlgorithm.getSorterFromValue(sortChoiceBox.getValue());
-        List<SortingEvent> events = sorter.sort(sortArray);
+        SortingAnimation animations = sorter.sort(sortArray);
 
         runner = new KillableThread() {
             @Override
             public void run() {
                 try {
-                    for (SortingEvent event : events) {
+                    for (AnimationEvent animation : animations) {
                         if (isKilled) {
                             return;
                         }
 
-                        performAnimation(event);
+                        performAnimation(animation);
                         Thread.sleep(getSleepDuration());
                     }
 
@@ -160,11 +163,27 @@ public class AppController {
         sizeLabel.setText(String.format("Array size (%d)", (int) sizeSlider.getValue()));
     }
 
-    private void performAnimation(SortingEvent event) {
-        switch (event.getType()) {
-            case Swap -> performSwapAnimation(event.getFirstElementIndex(), event.getSecondElementIndex());
-            case Comparison -> performComparisonAnimation(event.getFirstElementIndex(), event.getSecondElementIndex());
-            case Overwrite -> performOverwriteAnimation(event.getFirstElementIndex(), event.getValue());
+    private void performAnimation(AnimationEvent event) {
+        if (event instanceof ColorChangeEvent e) {
+            performColorChange(e);
+        } else if (event instanceof ValueChangeEvent e) {
+            performValueChange(e);
+        }
+
+        Platform.runLater(this::drawRectangleArray);
+    }
+
+    private void performValueChange(ValueChangeEvent e) {
+        for (int i : e) {
+            drawRectangles[i].setHeight(e.getNewValueForIndex(i));
+        }
+    }
+
+    private void performColorChange(ColorChangeEvent e) {
+        Color newColor = e.getNewColor();
+
+        for (int i : e) {
+            drawRectangles[i].setFill(newColor);
         }
     }
 
@@ -174,34 +193,6 @@ public class AppController {
             Platform.runLater(this::drawRectangleArray);
             Thread.sleep(getSleepDuration());
             recolorRectangles(drawRectangles, DEFAULT_BAR_COLOR, firstIndex, secondIndex);
-            Platform.runLater(this::drawRectangleArray);
-        } catch (InterruptedException ignored) {
-        }
-    }
-
-    private void performSwapAnimation(int firstIndex, int secondIndex) {
-        try {
-            recolorRectangles(drawRectangles, DEFAULT_SWAP_COLOR, firstIndex, secondIndex);
-            Platform.runLater(this::drawRectangleArray);
-            Thread.sleep(getSleepDuration());
-            swapRectangles(drawRectangles, firstIndex, secondIndex);
-            Platform.runLater(this::drawRectangleArray);
-            Thread.sleep(getSleepDuration());
-            recolorRectangles(drawRectangles, DEFAULT_BAR_COLOR, firstIndex, secondIndex);
-            Platform.runLater(this::drawRectangleArray);
-        } catch (InterruptedException ignored) {
-        }
-    }
-
-    private void performOverwriteAnimation(int index, double newValue) {
-        try {
-            recolorRectangles(drawRectangles, DEFAULT_OVERWRITE_COLOR, index);
-            Platform.runLater(this::drawRectangleArray);
-            Thread.sleep(getSleepDuration());
-            drawRectangles[index].setHeight(newValue);
-            Platform.runLater(this::drawRectangleArray);
-            Thread.sleep(getSleepDuration());
-            recolorRectangles(drawRectangles, DEFAULT_BAR_COLOR, index);
             Platform.runLater(this::drawRectangleArray);
         } catch (InterruptedException ignored) {
         }
