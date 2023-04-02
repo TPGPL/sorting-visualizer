@@ -20,6 +20,14 @@ public class SortingAnimation implements Iterable<AnimationEvent> {
         animations.add(new ColorChangeEvent(DEFAULT_BAR_COLOR, indices));
     }
 
+    public void addFailedSortAnimation(int... indices) {
+        animations.add(new ColorChangeEvent(DEFAULT_FAILED_COLOR, indices));
+    }
+
+    public void addSuccessfulSortAnimation(int... indices) {
+        animations.add(new ColorChangeEvent(DEFAULT_SORTED_COLOR, indices));
+    }
+
     public void addOverwriteAnimation(int index, double newValue) {
         animations.add(new ColorChangeEvent(DEFAULT_OVERWRITE_COLOR, index));
         animations.add(new ValueChangeEvent(new Pair<>(index, newValue)));
