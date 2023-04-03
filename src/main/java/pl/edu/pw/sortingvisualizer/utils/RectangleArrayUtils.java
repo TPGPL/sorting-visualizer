@@ -10,10 +10,10 @@ public class RectangleArrayUtils {
         }
 
         Rectangle[] rectArray = new Rectangle[nums.length];
-        double width = nums.length != 0 ? areaWidth / nums.length : 0;
+        double elemWidth = nums.length != 0 ? areaWidth / nums.length : 0;
 
         for (int i = 0; i < nums.length; i++) {
-            rectArray[i] = new Rectangle(width, nums[i], Color.BLACK);
+            rectArray[i] = new Rectangle(elemWidth, nums[i], Color.BLACK);
         }
 
         return rectArray;

@@ -227,16 +227,16 @@ public class AppController {
         Platform.runLater(this::drawRectangleArray);
     }
 
-    private void performValueChange(ValueChangeEvent e) {
-        for (int i : e) {
-            drawRectangles[i].setHeight(e.getNewValueForIndex(i));
+    private void performValueChange(ValueChangeEvent event) {
+        for (int i : event) {
+            drawRectangles[i].setHeight(event.getNewValueForIndex(i));
         }
     }
 
-    private void performColorChange(ColorChangeEvent e) {
-        Color newColor = e.getNewColor();
+    private void performColorChange(ColorChangeEvent event) {
+        Color newColor = event.getNewColor();
 
-        for (int i : e) {
+        for (int i : event) {
             drawRectangles[i].setFill(newColor);
         }
     }
