@@ -10,6 +10,7 @@ public class ValueChangeEvent extends AnimationEvent {
     @SafeVarargs
     public ValueChangeEvent(Pair<Integer, Double>... valueChanges) {
         super();
+
         newValues = new HashMap<>();
 
         for (Pair<Integer, Double> p : valueChanges) {
