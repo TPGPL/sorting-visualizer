@@ -15,6 +15,7 @@ public class ValueChangeEvent extends AnimationEvent {
 
     /**
      * Konstruktor klasy.
+     *
      * @param valueChanges indeksy elementów wektora wraz z ich nowymi wartościami
      */
     @SafeVarargs
@@ -31,6 +32,7 @@ public class ValueChangeEvent extends AnimationEvent {
 
     /**
      * Zwraca nową wartość elementu o podanym indeksie.
+     *
      * @param index indeks elementu
      * @return nowa wartośc elementu o podanym indeksie
      * @throws IllegalArgumentException jeżeli w zdarzeniu nie ma nowej wartości dla elementu o podanym indeksie
