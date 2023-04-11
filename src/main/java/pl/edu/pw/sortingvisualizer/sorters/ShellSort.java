@@ -5,8 +5,18 @@ import pl.edu.pw.sortingvisualizer.animations.SortingAnimation;
 
 import static pl.edu.pw.sortingvisualizer.sorters.SortingUtils.swap;
 
+/**
+ * Klasa odpowiedzialna za sortowanie Shella i generowanie dla niego wizualizacji.
+ */
 public class ShellSort implements VisualizableSorter {
 
+    /**
+     * Sortuje wektor liczb algorytmem sortowania Shella i generuje dla niego wizualizację.
+     *
+     * @param nums wektor liczb rzeczywistych
+     * @return animacja sortowania Shella
+     * @throws IllegalArgumentException jeżeli wektor jest nullem
+     */
     @Override
     public SortingAnimation sort(double[] nums) {
         if (nums == null) {

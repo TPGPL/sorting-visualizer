@@ -5,9 +5,22 @@ import pl.edu.pw.sortingvisualizer.animations.SortingAnimation;
 
 import static pl.edu.pw.sortingvisualizer.sorters.SortingUtils.swap;
 
+/**
+ * Klasa odpowiedzialna za sortowanie grzebieniowe i generowanie dla niego wizualizacji.
+ */
 public class CombSort implements VisualizableSorter {
+    /**
+     * Stała wykorzystywana do obliczania odległości między porównywanymi elementami.
+     */
     private final static double RATIO = 1.3;
 
+    /**
+     * Sortuje wektor liczb algorytmem sortowania grzebieniowego i generuje dla niego wizualizację.
+     *
+     * @param nums wektor liczb rzeczywistych
+     * @return animacja sortowania grzebieniowego
+     * @throws IllegalArgumentException jeżeli wektor jest nullem
+     */
     @Override
     public SortingAnimation sort(double[] nums) {
         if (nums == null) {

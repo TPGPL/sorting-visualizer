@@ -5,7 +5,17 @@ import pl.edu.pw.sortingvisualizer.animations.SortingAnimation;
 
 import static pl.edu.pw.sortingvisualizer.sorters.SortingUtils.swap;
 
+/**
+ * Klasa odpowiedzialna za sortowanie przez wybór i generowanie dla niego wizualizacji.
+ */
 public class SelectionSort implements VisualizableSorter {
+    /**
+     * Sortuje wektor liczb algorytmem sortowania przez wybór i generuje dla niego wizualizację.
+     *
+     * @param nums wektor liczb rzeczywistych
+     * @return animacja sortowania przez wybór
+     * @throws IllegalArgumentException jeżeli wektor jest nullem
+     */
     @Override
     public SortingAnimation sort(double[] nums) {
         if (nums == null) {

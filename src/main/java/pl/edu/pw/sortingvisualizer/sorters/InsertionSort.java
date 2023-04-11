@@ -5,7 +5,17 @@ import pl.edu.pw.sortingvisualizer.animations.SortingAnimation;
 
 import static pl.edu.pw.sortingvisualizer.sorters.SortingUtils.swap;
 
+/**
+ * Klasa odpowiedzialna za sortowanie przez wstawianie i generowanie dla niego wizualizacji.
+ */
 public class InsertionSort implements VisualizableSorter {
+    /**
+     * Sortuje wektor liczb algorytmem sortowania przez wstawianie i generuje dla niego wizualizację.
+     *
+     * @param nums wektor liczb rzeczywistych
+     * @return animacja sortowania przez wstawianie
+     * @throws IllegalArgumentException jeżeli wektor jest nullem
+     */
     @Override
     public SortingAnimation sort(double[] nums) {
         if (nums == null) {
