@@ -9,11 +9,25 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * Klasa odpowiadająca za uruchomienie i przygotowanie aplikacji.
+ */
 public class SortingVisualizer extends Application {
+    /**
+     * Uruchamia aplikację.
+     *
+     * @param args parametry uruchomieniowe
+     */
     public static void main(String[] args) {
         launch();
     }
 
+    /**
+     * Przygotowuje aplikację do uruchomienia.
+     *
+     * @param stage główne okno aplikacji
+     * @throws IOException jeżeli podczas korzystania z aplikacji wystąpi błąd IO
+     */
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(SortingVisualizer.class.getResource("main-view.fxml"));

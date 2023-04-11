@@ -28,36 +28,93 @@ import static pl.edu.pw.sortingvisualizer.Properties.DEFAULT_ARRAY_TYPE;
 import static pl.edu.pw.sortingvisualizer.Properties.DEFAULT_SORTING_ALGORITHM;
 import static pl.edu.pw.sortingvisualizer.utils.RectangleArrayUtils.convertDoubleToRectangleArray;
 
+/**
+ * Kontroler aplikacji odpowiadający z prxetwarzanie interakcji użytkownika z interfejsem graficznym aplikacji.
+ */
 public class AppController {
+    /**
+     * Lista rozwijana dostępnych typów wektora.
+     */
     @FXML
     private ChoiceBox<GeneratorType> arrayChoiceBox;
+    /**
+     * Lista rozwijana dostępnych algorytmów sortowania.
+     */
     @FXML
     private ChoiceBox<SortingAlgorithm> sortChoiceBox;
+    /**
+     * Etykieta suwaka zmiany odstępu czasowego.
+     */
     @FXML
     private Label delayLabel;
+    /**
+     * Etykieta suwaka zmiany wielkości wektora.
+     */
     @FXML
     private Label sizeLabel;
+    /**
+     * Suwak zmiany odstępu czasowego.
+     */
     @FXML
     private Slider delaySlider;
+    /**
+     * Suwak zmiany wielkości wektora.
+     */
     @FXML
     private Slider sizeSlider;
+    /**
+     * Przycisk generujący nowy wektor.
+     */
     @FXML
     private Button generateButton;
+    /**
+     * Przycisk rozpoczynający wizualizację sortowania w trybie ciągłym.
+     */
     @FXML
     private Button sortButton;
+    /**
+     * Przycisk zatrzymujący wizualizację sortowania w trybie ciągłym.
+     */
     @FXML
     private Button stopButton;
+    /**
+     * Przycisk przechodzący do kolejnej klatki animacji sortowania.
+     */
     @FXML
     private Button stepButton;
+    /**
+     * Panel wizualizacji.
+     */
     @FXML
     private Canvas drawPanel;
+    /**
+     * Wektor liczb rzeczywistych do posortowania.
+     */
     private double[] sortArray;
+    /**
+     * Reprezentacja wektora liczb w postaci prostokątów.
+     */
     private Rectangle[] drawRectangles;
+    /**
+     * Element panelu wizualizacji umożliwiający rysowanie po nim.
+     */
     private GraphicsContext gc;
+    /**
+     * Wątek odpowiadający za wizualizację w trybie ciągłym.
+     */
     private KillableThread runner;
+    /**
+     * Formatowanie liczb w tekście etykiet.
+     */
     private DecimalFormat formatter;
+    /**
+     * Zdarzenia elementarne animacji, które nie zostały jeszcze zwizualizowane.
+     */
     private Iterator<AnimationEvent> pendingAnimations;
 
+    /**
+     * Inicjalizuje domyślne ustawienia interfejsu.
+     */
     @FXML
     public void initialize() {
         formatter = new DecimalFormat("0.##");
@@ -81,6 +138,9 @@ public class AppController {
         gc.fillText("<no array generated>", 0, drawPanel.getHeight() - 10);
     }
 
+    /**
+     * Generuje nowy wektor do posortowania.
+     */
     @FXML
     public void generateArray() {
         int elemCount = (int) sizeSlider.getValue();
@@ -93,6 +153,9 @@ public class AppController {
         togglePostGenerationUI();
     }
 
+    /**
+     * Uruchamia wizualizację działania algorytmu sortowania w trybie ciągłym.
+     */
     @FXML
     public void sortAction() {
         toggleSortingUI();
@@ -123,6 +186,9 @@ public class AppController {
         runner.start();
     }
 
+    /**
+     * Przechodzi do następnej klatki animacji (wizualizacja w trybie krokowym).
+     */
     @FXML
     public void stepAction() {
         toggleSortingUI();
@@ -136,6 +202,9 @@ public class AppController {
         toggleIdleUI();
     }
 
+    /**
+     * Zatrzymuje wizualizację w trybie ciągłym.
+     */
     @FXML
     public void stopAction() {
         if (runner != null && runner.isAlive()) {
@@ -144,6 +213,9 @@ public class AppController {
         }
     }
 
+    /**
+     * Przygotowuje animację sortowania dla nowo wygenerowanego wektora.
+     */
     private void prepareSortingAnimation() {
         if (pendingAnimations == null) {
             VisualizableSorter sorter = SortingAlgorithm.getSorterFromValue(sortChoiceBox.getValue());
@@ -153,6 +225,11 @@ public class AppController {
         }
     }
 
+    /**
+     * Dodaje animację sprawdzenia poprawności sortowania wektora.
+     *
+     * @param animations animacja sortowania aktualnego wektora
+     */
     private void addCheckAnimation(SortingAnimation animations) {
         for (int i = 0; i < sortArray.length - 1; i++) {
             animations.addComparisonAnimation(i, i + 1);
@@ -166,6 +243,9 @@ public class AppController {
         }
     }
 
+    /**
+     * Rysuje wizualizację aktualnego stanu wektora liczb w postaci prostokątów.
+     */
     @FXML
     private void drawRectangleArray() {
         gc.clearRect(0, 0, drawPanel.getWidth(), drawPanel.getHeight());
@@ -178,6 +258,9 @@ public class AppController {
         }
     }
 
+    /**
+     * Zmienia dostępność elementów interfejsu na stan po wygenerowaniu nowego wektora.
+     */
     @FXML
     private void togglePostGenerationUI() {
         sortButton.setDisable(false);
@@ -185,6 +268,9 @@ public class AppController {
         sortButton.setText("Sort");
     }
 
+    /**
+     * Zmienia dostępność elementów interfejsu na stan, gdy wizualizacja w trybie ciągłym nie jest aktywna.
+     */
     @FXML
     private void toggleIdleUI() {
         generateButton.setDisable(false);
@@ -199,6 +285,9 @@ public class AppController {
         }
     }
 
+    /**
+     * Zmienia dostępność elementów interfejsu na stan podczas wizualizacji w trybie ciągłej.
+     */
     @FXML
     private void toggleSortingUI() {
         generateButton.setDisable(true);
@@ -207,16 +296,27 @@ public class AppController {
         stopButton.setDisable(false);
     }
 
+    /**
+     * Aktualizuje tekst etykiety suwaka zmiany odstępu czasowego w oparciu o jego wartość.
+     */
     @FXML
     private void updateDelayLabel() {
         delayLabel.setText(String.format("Delay [ms] (%s)", formatter.format(delaySlider.getValue())));
     }
 
+    /**
+     * Aktualizuje tekst etykiety suwaka zmiany wielkości wektora w oparciu o jego wartość.
+     */
     @FXML
     private void updateSizeLabel() {
         sizeLabel.setText(String.format("Array size (%d)", (int) sizeSlider.getValue()));
     }
 
+    /**
+     * Aktualizuje model względem przekazanego zdarzenia elementarnego animacji.
+     *
+     * @param event zdarzenie elementarne animacji
+     */
     private void performAnimation(AnimationEvent event) {
         if (event instanceof ColorChangeEvent e) {
             performColorChange(e);
@@ -227,12 +327,22 @@ public class AppController {
         Platform.runLater(this::drawRectangleArray);
     }
 
+    /**
+     * Zmienia wartość elementów uwzględnionych w przekazanym zdarzeniu animacji.
+     *
+     * @param event zdarzenie reprezentujące zmianę wartości
+     */
     private void performValueChange(ValueChangeEvent event) {
         for (int i : event) {
             drawRectangles[i].setHeight(event.getNewValueForIndex(i));
         }
     }
 
+    /**
+     * Zmienia kolor elementów uwzględnionych w przekazanym zdarzeniu animacji.
+     *
+     * @param event zdarzenie reprezentujące zmianę koloru
+     */
     private void performColorChange(ColorChangeEvent event) {
         Color newColor = event.getNewColor();
 
@@ -241,6 +351,11 @@ public class AppController {
         }
     }
 
+    /**
+     * Zwraca długość odstępu czasowego między kolejnymi animacjami w nanosekundach.
+     *
+     * @return długość odstępu czasowego w nanosekundach
+     */
     private Duration getSleepDuration() {
         return Duration.ofNanos((long) (delaySlider.getValue() * 1000000));
     }
