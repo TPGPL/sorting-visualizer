@@ -1,3 +1,6 @@
+/**
+ * Aplikacja wizualizująca działanie algorytmów sortowania.
+ */
 module pl.edu.pw.sortingvisualizer {
     requires javafx.controls;
     requires javafx.fxml;
