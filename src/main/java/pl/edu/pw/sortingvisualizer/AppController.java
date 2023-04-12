@@ -29,7 +29,7 @@ import static pl.edu.pw.sortingvisualizer.Properties.DEFAULT_SORTING_ALGORITHM;
 import static pl.edu.pw.sortingvisualizer.utils.RectangleArrayUtils.convertDoubleToRectangleArray;
 
 /**
- * Kontroler aplikacji odpowiadający z prxetwarzanie interakcji użytkownika z interfejsem graficznym aplikacji.
+ * Kontroler aplikacji odpowiadający za obsługiwanie interakcji użytkownika z interfejsem graficznym aplikacji.
  */
 public class AppController {
     /**
@@ -78,7 +78,7 @@ public class AppController {
     @FXML
     private Button stopButton;
     /**
-     * Przycisk przechodzący do kolejnej klatki animacji sortowania.
+     * Przycisk wyświetlający kolejną klatkę animacji sortowania.
      */
     @FXML
     private Button stepButton;
@@ -92,7 +92,7 @@ public class AppController {
      */
     private double[] sortArray;
     /**
-     * Reprezentacja wektora liczb w postaci prostokątów.
+     * Reprezentacja wektora liczb w postaci wektora prostokątów.
      */
     private Rectangle[] drawRectangles;
     /**
@@ -104,7 +104,7 @@ public class AppController {
      */
     private KillableThread runner;
     /**
-     * Formatowanie liczb w tekście etykiet.
+     * Formatowanie liczb w etykietach.
      */
     private DecimalFormat formatter;
     /**
@@ -113,7 +113,7 @@ public class AppController {
     private Iterator<AnimationEvent> pendingAnimations;
 
     /**
-     * Inicjalizuje domyślne ustawienia interfejsu.
+     * Inicjalizuje domyślne ustawienia interfejsu i ustawia nasłuchy na zmiany wartości suwaków.
      */
     @FXML
     public void initialize() {
@@ -139,7 +139,9 @@ public class AppController {
     }
 
     /**
-     * Generuje nowy wektor do posortowania.
+     * Generuje nowy wektor do posortowania wraz z jego wizualizacją i przełącza stan interfejsu.
+     *
+     * @see AppController#togglePostGenerationUI() togglePostGenerationUI
      */
     @FXML
     public void generateArray() {
@@ -154,7 +156,9 @@ public class AppController {
     }
 
     /**
-     * Uruchamia wizualizację działania algorytmu sortowania w trybie ciągłym.
+     * Uruchamia wizualizację działania algorytmu sortowania w trybie ciągłym i przełącza stan interfejsu.
+     *
+     * @see AppController#toggleSortingUI() toggleSortingUI
      */
     @FXML
     public void sortAction() {
@@ -203,7 +207,9 @@ public class AppController {
     }
 
     /**
-     * Zatrzymuje wizualizację w trybie ciągłym.
+     * Zatrzymuje wizualizację w trybie ciągłym i przełącza stan interfejsu.
+     *
+     * @see AppController#toggleIdleUI() toggleIdleUI
      */
     @FXML
     public void stopAction() {
@@ -220,13 +226,15 @@ public class AppController {
         if (pendingAnimations == null) {
             VisualizableSorter sorter = SortingAlgorithm.getSorterFromValue(sortChoiceBox.getValue());
             SortingAnimation animations = sorter.sort(sortArray);
+
             addCheckAnimation(animations);
+
             pendingAnimations = animations.iterator();
         }
     }
 
     /**
-     * Dodaje animację sprawdzenia poprawności sortowania wektora.
+     * Dodaje animację sprawdzenia poprawności posortowania wektora.
      *
      * @param animations animacja sortowania aktualnego wektora
      */
@@ -286,7 +294,7 @@ public class AppController {
     }
 
     /**
-     * Zmienia dostępność elementów interfejsu na stan podczas wizualizacji w trybie ciągłej.
+     * Zmienia dostępność elementów interfejsu na stan, gdy wizualizacja w trybie ciągłym jest aktywna.
      */
     @FXML
     private void toggleSortingUI() {
