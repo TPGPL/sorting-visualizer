@@ -12,7 +12,7 @@ A sorting algorithm visualizer written in Java.
 1. Clone the GitHub repository
 
 ```
-$ git clone https://github.com/ppy/osu-web.git
+$ git clone https://github.com/TPGPL/sorting-visualizer.git
 ```
 
 2. Install dependencies and build application
