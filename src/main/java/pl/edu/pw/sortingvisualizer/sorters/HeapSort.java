@@ -96,8 +96,8 @@ public class HeapSort implements VisualizableSorter {
                 return;
             }
 
-            swap(nums, child, parent);
             animations.addSwapAnimation(new Pair<>(child, nums[child]), new Pair<>(parent, nums[parent]));
+            swap(nums, child, parent);
         }
     }
 }
